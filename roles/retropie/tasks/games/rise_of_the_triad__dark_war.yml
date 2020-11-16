@@ -1,0 +1,73 @@
+- name: Print Variables
+  debug:
+    msg:
+      - "Game: {{ game.name }}"
+      - "Full Name: {{ game.full_name }}"
+      - "Installer Directory: {{ installer_dir }}/{{ game.name}}/"
+      - "Installer: {{ installer_dir }}/{{ game.name }}/{{ game.installer }}"
+      - "User: {{ game_user }}"
+    verbosity: 2
+
+- name: "Installing '{{ game.full_name }}'"
+  command: "sudo retropie_packages.sh rott {{ item }}"
+  loop: "{{ game.retropie_commands }}"
+  become: yes
+  become_user: "{{ game_user }}"
+
+- name: "Extracting '{{ game.full_name }}'"
+  script:
+    cmd: "{{ installer_dir }}/{{ game.name }}/{{ game.installer }} -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination /tmp/{{ game.name }}"
+  become: yes
+  become_user: "{{ game_user }}"
+
+- name: "Install Data Files"
+  copy:
+    src: "/tmp/{{ game.name }}/data/{{ item }}"
+    dest: "/home/{{ game_user }}/RetroPie/roms/ports/rott/{{ item | lower }}"
+    owner: "{{ game_user }}"
+    group: "{{ game_user }}"
+    mode: "0644"
+    remote_src: yes
+  become: yes
+  become_user: "{{ game_user }}"
+  loop: "{{ game.data_files }}"
+
+- name: "Install Additional Data Files"
+  unarchive:
+    src: "/tmp/{{ game.name }}/data/{{ item }}"
+    dest: "/home/{{ game_user }}/RetroPie/roms/ports/rott/"
+    owner: "{{ game_user }}"
+    group: "{{ game_user }}"
+    mode: "0644"
+    remote_src: yes
+  become: yes
+  become_user: "{{ game_user }}"
+  loop:
+    "{{ game.additional_data_files }}"
+
+# ======================================================================
+#
+# Remove temporary files
+#
+# Further debugging needed.  The command successfully removes all
+# installation files, but reports a failure.
+#
+# ======================================================================
+- name: "Remove temporary files"
+  command: "./uninstall-Rise of the Triad Dark War.sh --force"
+  args:
+    chdir: "/tmp/{{ game.name }}"
+  become: yes
+  become_user: "{{ game_user }}"
+  ignore_errors: True
+
+- name: "Ensure temporary files are gone"
+  file:
+    path: "/tmp/{{ game.name }}"
+    state: absent
+
+- name: "Clean-Up the Desktop"
+  file:
+    path: "/home/{{ game_user }}/Desktop/{{ item }}"
+    state: absent
+  loop: "{{ game.desktop_files }}"

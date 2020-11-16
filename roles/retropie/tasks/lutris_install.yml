@@ -1,0 +1,20 @@
+- name: Add Apt signing key for Lutris, uses whichever key is at the URL
+  apt_key:
+    url: https://keyserver.ubuntu.com/pks/lookup?fingerprint=on&op=index&search=0x82D96E430A1F1C0F0502747E37B90EDD4E3EFAE4
+    state: present
+
+# Add specified repository into sources list using specified filename.
+- name: Add repository
+  apt_repository:
+    repo: "{{ item }}"
+    state: absent
+    filename: playonlinux
+  loop:
+    - "deb http://ppa.launchpad.net/lutris-team/lutris/ubuntu {{ ansible_distribution_release }} main"
+    - "deb-src http://ppa.launchpad.net/lutris-team/lutris/ubuntu {{ ansible_distribution_release }} main"
+
+- name: "Ensure all packages are up to date (Safe upgrade)"
+  apt:
+    update_cache: yes
+    upgrade: yes
+    cache_valid_time: 86400 #One day

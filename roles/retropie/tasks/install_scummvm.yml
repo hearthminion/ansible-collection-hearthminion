@@ -1,0 +1,81 @@
+- name: Print Variables
+  debug:
+    msg:
+      - "Game: {{ game.name }}"
+      - "Full Name: {{ game.full_name }}"
+      - "Installer Directory: {{ installer_dir }}/{{ game.name}}/"
+      - "Installer: {{ installer_dir }}/{{ game.name }}/{{ game.installer }}"
+      - "User: {{ game_user }}"
+    verbosity: 2
+  tags:
+    - install-games
+
+- name: "Ensure temporary files are gone in case the previous run failed"
+  file:
+    path: "/tmp/{{ game.name }}"
+    state: absent
+  tags:
+    - install-games
+
+- name: "Extracting Files for '{{ game.full_name }}'"
+  script:
+    cmd: "{{ installer_dir }}/{{ game.name }}/{{ game.installer }} -- --i-agree-to-all-licenses --noreadme --nooptions --noprompt --destination /tmp/{{ game.name }}"
+  become: yes
+  become_user: "{{ game_user }}"
+  tags:
+    - install-games
+
+- name: "Install Data Files for '{{ game.full_name }}'"
+  copy:
+    src: "/tmp/{{ game.name }}/{{ game.data_dir }}/{{ item }}"
+    dest: "/home/{{ game_user }}/RetroPie/roms/scummvm/{{ game.full_name }}/{{ item | lower }}"
+    mode: "0644"
+    remote_src: yes
+  become: yes
+  become_user: "{{ game_user }}"
+  loop: "{{ game.data_files }}"
+  tags:
+    - install-games
+
+# ======================================================================
+#
+# Remove temporary files
+#
+# Further debugging needed.  The command successfully removes all
+# installation files, but reports a failure.
+#
+# ======================================================================
+- name: Find Uninstaller
+  find:
+    path: "/tmp/{{ game.name }}/"
+    pattern: uninstall_*.sh
+  register: uninstaller
+  when:
+    - game.data_source == "gog"
+  tags:
+    - install-games
+
+- name: "Remove temporary files"
+  command: "/tmp/{{ game.name }}/{{ uninstaller }} --force"
+  become: yes
+  become_user: "{{ game_user }}"
+  ignore_errors: True
+  when:
+    - uninstaller is defined
+  tags:
+    - install-games
+
+- name: "Ensure temporary files are gone"
+  file:
+    path: "/tmp/{{ game.name }}"
+    state: absent
+  tags:
+    - install-games
+
+- name: "Clean-Up the Desktop"
+  file:
+    path: "/home/{{ game_user }}/Desktop/{{ item }}"
+    state: absent
+  loop: "{{ game.desktop_files }}"
+  tags:
+    - install-games

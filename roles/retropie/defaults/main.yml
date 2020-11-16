@@ -1,0 +1,826 @@
+packages:
+  - dialog
+  - unzip
+  - xmlstarlet
+  - git
+  - steam
+  - playonlinux
+  - fakeroot
+  - icoutils
+  - imagemagick
+  - innoextract
+  - lutris
+  - nvidia-driver-440
+  - libnvidia-gl-440
+  - libnvidia-gl-440:i386
+  - libvulkan1
+  - libvulkan1:i386
+  - gcdemu
+
+# ======================================================================
+#
+# Other Packages:
+#  steamcmd: Also required, it has a non-free license that requires
+#            being agreed to before installing.
+#
+# ======================================================================
+
+games_dir: /srv/games 
+roms_dir: "{{ games_dir }}/roms"
+installer_dir: "{{ games_dir }}/installers"
+ 
+games_list:
+  - name: afterlife
+    full_name: "Afterlife"
+    installer: "gog_afterlife_2.2.0.8.sh"
+    icon: "afterlife.ico"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Afterlife_1.desktop
+      - gog_com-Afterlife_2.desktop
+  - name: "akalabeth_world_of_doom"
+    full_name: "Akalabeth - World of Doom"
+    installer: "gog_akalabeth_world_of_doom_2.0.0.3.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Akalabeth_World_of_Doom_1.desktop
+  - name: "baldurs_gate_2_complete"
+    full_name: "Baldur's Gate 2 (Complete)"
+    installer: "baldur_s_gate_2_complete_gog_3_23651.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Baldurs_Gate_2_Complete_1.desktop
+      - gog_com-Baldurs_Gate_2_Complete_2.desktop
+      - gog_com-Baldurs_Gate_2_Complete_3.desktop
+  - name: "baldurs_gate_2_enhanced_edition"
+    full_name: "Baldur's Gate 2 (Enhanced_Edition)"
+    installer: "baldur_s_gate_2_enhanced_edition_en_2_5_21851.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Baldurs_Gate_2_Enhanced_Edition_1.desktop
+  - name: "baldurs_gate_the_original_saga"
+    full_name: "Baldur's Gate (The Original Saga)"
+    installer: "baldur_s_gate_the_original_saga_gog_3_23532.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Baldurs_Gate_The_Original_Saga_1.desktop
+      - gog_com-Baldurs_Gate_The_Original_Saga_2.desktop
+      - gog_com-Baldurs_Gate_The_Original_Saga_3.desktop
+  - name: "baldurs_gate_enhanced_edition"
+    full_name: "Baldur's Gate (Enhanced_Edition)"
+    installer: "baldur_s_gate_enhanced_edition_en_2_5_23121.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Baldurs_Gate_Enhanced_Edition_1.desktop
+  - name: "beneath_a_steel_sky"
+    full_name: "Beneath a Steel Sky"
+    installer: "beneath_a_steel_sky_en_gog_2_20150.sh"
+    platform_type: "scummvm"
+    data_source: "gog"
+    data_dir: "data"
+    data_files:
+      - readme.txt
+      - SKY.CFG
+      - sky.cpt
+      - sky.dnr
+      - sky.dsk
+    desktop_files:
+      - gog_com-Beneath_A_Steel_Sky_1.desktop
+  - name: "bio_menace"
+    full_name: "Bio Menace"
+    installer: "gog_bio_menace_2.0.0.2.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Bio_Menace_1.desktop
+  - name: "blake_stone_aliens_of_gold"
+    full_name: "Blake Stone - Aliens of Gold"
+    installer: "gog_blake_stone_aliens_of_gold_2.0.0.6.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Blake_Stone_Aliens_of_Gold_1.desktop
+  - name: "blake_stone_planet_strike"
+    full_name: "Blake Stone - Planet Strike"
+    installer: "gog_blake_stone_planet_strike_2.0.0.5.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Blake_Stone_Planet_Strike_1.desktop
+  - name: "cayne"
+    full_name: "Cayne"
+    installer: "gog_cayne_2.0.0.1.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-CAYNE_1.desktop
+  - name: "day_of_the_tentacle_remastered"
+    full_name: "Day of the Tentacle Remastered"
+    installer: "gog_day_of_the_tentacle_remastered_2.1.0.2.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Day_of_the_Tentacle_Remastered_1.desktop
+  - name: "dragonsphere"
+    full_name: "Dragonsphere"
+    installer: "gog_dragonsphere_2.0.0.3.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Dragonsphere_1.desktop
+  - name: "dreamfall"
+    full_name: "Dreamfall"
+    installer: "dreamfall_chapters_the_final_cut_5_7_8_26845.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Dreamfall_Chapters_The_Final_Cut_1.desktop
+  - name: "duke_nukem"
+    full_name: "Duke Nukem"
+    installer: "gog_duke_nukem_2.0.0.2.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Duke_Nukem_1.desktop
+  - name: "duke_nukem_2"
+    full_name: "Duke Nukem 2"
+    installer: "gog_duke_nukem_2_2.0.0.2.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Duke_Nukem_2_1.desktop
+  - name: "duke_nukem_3d"
+    full_name: "Duke Nukem 3D"
+    steam_id: 225140
+    data_source: "steam"
+    platform_type: "unique"
+    retropie_commands:
+      - depends
+      - install
+      - configure
+    gog_data_files:
+      - "DUKE3D.GRP"
+    steam_data_files:
+      - "duke3d.grp"
+      - "addons/dc/DUKEDC1.MAP"
+      - "addons/dc/DUKEDC2.MAP"
+      - "addons/dc/DUKEDC3.MAP"
+      - "addons/dc/DUKEDC4.MAP"
+      - "addons/dc/DUKEDC5.MAP"
+      - "addons/dc/DUKEDC6.MAP"
+      - "addons/dc/DUKEDC7.MAP"
+      - "addons/dc/DUKEDC8.MAP"
+      - "addons/dc/DUKEDC9.MAP"
+      - "addons/dc/dukedc.grp"
+      - "addons/dc/DUKEDCSL.MAP"
+      - "addons/nw/E2L1.MAP"
+      - "addons/nw/E2L2.MAP"
+      - "addons/nw/E2L3.MAP"
+      - "addons/nw/E2L4.MAP"
+      - "addons/nw/E2L5.MAP"
+      - "addons/nw/E2L6.MAP"
+      - "addons/nw/E2L7.MAP"
+      - "addons/nw/E2L8.MAP"
+      - "addons/nw/nwactor.con"
+      - "addons/nw/nwdes.con"
+      - "addons/nw/nwinter.con"
+      - "addons/nw/nwinter.grp"
+      - "addons/vacation/VACA1.MAP"
+      - "addons/vacation/VACA2.MAP"
+      - "addons/vacation/VACA3.MAP"
+      - "addons/vacation/VACA4.MAP"
+      - "addons/vacation/VACA5.MAP"
+      - "addons/vacation/VACA6.MAP"
+      - "addons/vacation/VACA7.MAP"
+      - "addons/vacation/VACADM1.MAP"
+      - "addons/vacation/VACADM2.MAP"
+      - "addons/vacation/VACADM3.MAP"
+      - "addons/vacation/VACADM4.MAP"
+      - "addons/vacation/VACASL.MAP"
+      - "addons/vacation/vacation.grp"
+    desktop_files:
+      - "Duke Nukem 3D Megaton Edition.desktop"
+  - name: "dungeons_2"
+    full_name: "Dungeons 2"
+    installer: "gog_dungeons_2_2.0.0.1.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Dungeons_2_1.desktop
+  - name: "eschalon_book_i"
+    full_name: "Eschalon Book 1"
+    installer: "gog_eschalon_book_i_2.0.0.5.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Eschalon_Book_I_1.desktop
+  - name: "f117a_nighthawk_stealth_fighter_20"
+    full_name: "F-117A Nighthawk Stealth Fighter"
+    installer: "gog_f_117a_nighthawk_stealth_fighter_2_0_2.1.0.4.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-F_117A_Nighthawk_Stealth_Fighter_2_0_1.desktop
+  - name: "falcon_at"
+    full_name: "Falcon A.T. (1988)"
+    installer: "gog_falcon_a_t_2.0.0.1.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Falcon_A_T_1.desktop
+  - name: "falcon"
+    full_name: "Falcon (1987)"
+    installer: "gog_falcon_2.0.0.1.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Falcon_1.desktop
+  - name: "falcon_gold"
+    full_name: "Falcon 3.0 (Gold) (1994)"
+    installer: "gog_falcon_gold_2.0.0.1.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Falcon_Gold_1.desktop
+  - name: "fantasy_general"
+    full_name: "Fantasy General"
+    installer: "gog_fantasy_general_2.0.0.8.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Fantasy_General_1.desktop
+      - gog_com-Fantasy_General_2.desktop
+  - name: "faster_than_light"
+    full_name: "Faster Than Light"
+    installer: "ftl_advanced_edition_1_6_12_2_35269.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-FTL_Advanced_Edition_1.desktop
+  - name: "grim_fandango_remastered"
+    full_name: "Grim Fandango Remastered"
+    installer: "gog_grim_fandango_remastered_2.3.0.7.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Grim_Fandango_Remastered_1.desktop
+  - name: "half_life"
+    full_name: "Half-Life"
+    steam_id: 70
+    platform_type: "steam_shortcut"
+  - name: "half_life_blue_shift"
+    full_name: "Half-Life - Blue Shift"
+    steam_id: 130
+    platform_type: "steam_shortcut"
+  - name: "half_life_deathmatch_source"
+    full_name: "Half-Life - Deathmatch - Source"
+    steam_id: 360
+    platform_type: "steam_shortcut"
+  - name: "half_life_opposing_force"
+    full_name: "Half-Life - Opposing Force"
+    steam_id: 50
+    platform_type: "steam_shortcut"
+  - name: "half_life_source"
+    full_name: "Half-Life - Source"
+    steam_id: 280
+    platform_type: "steam_shortcut"
+  - name: "half_life_2"
+    full_name: "Half-Life 2"
+    steam_id: 220
+    platform_type: "steam_shortcut"
+  - name: "half_life_2_deathmatch"
+    full_name: "Half-Life 2 - Deathmatch"
+    steam_id: 320
+    platform_type: "steam_shortcut"
+  - name: "half_life_2_episode_one"
+    full_name: "Half-Life 2 - Episode One"
+    steam_id: 380
+    platform_type: "steam_shortcut"
+  - name: "half_life_2_episode_two"
+    full_name: "Half-Life 2 - Episode Two"
+    steam_id: 420
+    platform_type: "steam_shortcut"
+  - name: "half_life_2_lost_coast"
+    full_name: "Half-Life 2 - Lost Coast"
+    steam_id: 340
+    platform_type: "steam_shortcut"
+  - name: "icewind_dale_enhanced_edition"
+    full_name: "Icewind Dale"
+    installer: "icewind_dale_enhanced_edition_en_2_5_17_23121.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Icewind_Dale_Enhanced_Edition_1.desktop
+  - name: "indiana_jones_and_the_fate_of_atlantis"
+    full_name: "Indiana Jones and the Fate of Atlantis"
+    installer: "indiana_jones_and_the_fate_of_atlantis_en_gog_2_20145.sh"
+    platform_type: "scummvm"
+    data_source: "gog"
+    data_dir: "data"
+    data_files:
+      - "ATLANTIS.000"
+      - "ATLANTIS.001"
+      - "MONSTER.SOU"
+    desktop_files:
+      - "gog_com-Indiana_Jones_and_the_Fate_of_Atlantis_1.desktop"
+  - name: "indiana_jones_and_the_last_crusade"
+    full_name: "Indiana Jones and the Last Crusade"
+    installer: "indiana_jones_and_the_last_crusade_en_gog_2_20145.sh"
+    platform_type: "scummvm"
+    data_source: "gog"
+    data_dir: "data"
+    data_files:
+      - 00.LFL
+      - 01.LFL
+      - 02.LFL
+      - 03.LFL
+      - 04.LFL
+      - 06.LFL
+      - 07.LFL
+      - 08.LFL
+      - 09.LFL
+      - 12.LFL
+      - 13.LFL
+      - 14.LFL
+      - 15.LFL
+      - 16.LFL
+      - 17.LFL
+      - 18.LFL
+      - 19.LFL
+      - 20.LFL
+      - 21.LFL
+      - 22.LFL
+      - 23.LFL
+      - 24.LFL
+      - 25.LFL
+      - 26.LFL
+      - 27.LFL
+      - 28.LFL
+      - 29.LFL
+      - 30.LFL
+      - 31.LFL
+      - 32.LFL
+      - 33.LFL
+      - 34.LFL
+      - 35.LFL
+      - 36.LFL
+      - 37.LFL
+      - 38.LFL
+      - 39.LFL
+      - 40.LFL
+      - 41.LFL
+      - 42.LFL
+      - 43.LFL
+      - 44.LFL
+      - 45.LFL
+      - 46.LFL
+      - 47.LFL
+      - 48.LFL
+      - 49.LFL
+      - 50.LFL
+      - 51.LFL
+      - 52.LFL
+      - 53.LFL
+      - 54.LFL
+      - 55.LFL
+      - 56.LFL
+      - 57.LFL
+      - 58.LFL
+      - 59.LFL
+      - 60.LFL
+      - 61.LFL
+      - 62.LFL
+      - 63.LFL
+      - 64.LFL
+      - 66.LFL
+      - 67.LFL
+      - 68.LFL
+      - 69.LFL
+      - 70.LFL
+      - 71.LFL
+      - 72.LFL
+      - 73.LFL
+      - 74.LFL
+      - 75.LFL
+      - 76.LFL
+      - 77.LFL
+      - 78.LFL
+      - 79.LFL
+      - 80.LFL
+      - 81.LFL
+      - 82.LFL
+      - 83.LFL
+      - 84.LFL
+      - 85.LFL
+      - 86.LFL
+      - 87.LFL
+      - 90.LFL
+      - 91.LFL
+      - 93.LFL
+      - 94.LFL
+      - 98.LFL
+      - 99.LFL
+    desktop_files:
+      - "gog_com-Indiana_Jones_and_The_Last_Crusade_1.desktop"
+  - name: "jill_of_the_jungle_the_complete_trilogy"
+    full_name: "Jill of the Jungle"
+    installer: "jill_of_the_jungle_the_complete_trilogy_gog_1_24778.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Jill_of_the_Jungle_The_Complete_Trilogy_1.desktop
+  - name: "jotun"
+    full_name: "Jotun"
+    installer: "jotun_12_09_2019_32415.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Jotun_1.desktop
+  - name: "legend_of_keepers_prologue"
+    full_name: "Legend of Keepers"
+    installer: "legend_of_keepers_prologue_0_7_0_1_37040.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Legend_of_Keepers_Prologue_1.desktop
+  - name: "loom"
+    full_name: "Loom"
+    installer: "loom_en_gog_2_20099.sh"
+    platform_type: "scummvm"
+    data_source: "gog"
+    data_dir: "data"
+    data_files:
+      - 000.LFL
+      - 901.LFL
+      - 902.LFL
+      - 903.LFL
+      - 904.LFL
+      - CDDA.SOU
+      - DISK01.LEC
+      - _other
+    desktop_files:
+      - gog_com-Loom_1.desktop
+  - name: "lure_of_the_temptress"
+    full_name: "Lure of the Temptress"
+    installer: "lure_of_the_temptress_en_gog_2_20099.sh"
+    platform_type: "scummvm"
+    data_source: "gog"
+    data_dir: "data"
+    data_files:
+      - Disk1.vga
+      - Disk2.vga
+      - Disk3.vga
+      - Disk4.vga
+      - License_and_support.txt
+      - lure.dat
+    desktop_files:
+      - gog_com-Lure_of_the_Temptress_1.desktop
+  - name: "overload_playable_teaser"
+    full_name: "Overload (Demo)"
+    installer: "overload_playable_teaser_en_demo_21517.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Overload_Playable_Teaser_1.desktop
+  - name: "oxenfree"
+    full_name: "Oxen"
+    installer: "oxenfree_2_7_1_27542.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Oxenfree_1.desktop
+  - name: "planescape_torment"
+    full_name: "Planescape Torment"
+    installer: "planescape_torment_gog_3_23483.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Planescape_Torment_1.desktop
+      - gog_com-Planescape_Torment_2.desktop
+  - name: "postal_classic_and_uncut"
+    full_name: "Postal"
+    installer: "gog_postal_classic_and_uncut_2.1.0.3.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Postal_Classic_and_Uncut_1.desktop
+  - name: "rise_of_the_triad__dark_war"
+    full_name: "Rise of the Triad - Dark War (GOG)"
+    installer: "gog_rise_of_the_triad_dark_war_2.0.0.9.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Rise_of_the_Triad_Dark_War_1.desktop
+      - gog_com-Rise_of_the_Triad_Dark_War_2.desktop
+      - gog_com-Rise_of_the_Triad_Dark_War_3.desktop
+      - gog_com-Rise_of_the_Triad_Dark_War_4.desktop     
+  # - name: "rise_of_the_triad__dark_war"
+  #   full_name: "Rise of the Triad - Dark War"
+  #   installer: "gog_rise_of_the_triad_dark_war_2.0.0.9.sh"
+  #   platform_type: "unique"
+  #     - depends
+  #     - install
+  #     - configure
+  #   data_files:
+  #     - DARKWAR.RTC
+  #     - DARKWAR.RTL
+  #     - DARKWAR.WAD
+  #     - HUNTBGIN.RTC
+  #     - HUNTBGIN.RTL
+  #     - REMOTE1.RTS
+  #     - ROTTCD.RTC
+  #     - ROTTSITE.RTC
+  #     - EXTREME.RTL
+  #   additional_data_files:
+  #     - MORELVLS.ZIP
+  #   desktop_files:
+  #     - gog_com-Rise_of_the_Triad_Dark_War_1.desktop
+  #     - gog_com-Rise_of_the_Triad_Dark_War_2.desktop
+  #     - gog_com-Rise_of_the_Triad_Dark_War_3.desktop
+  #     - gog_com-Rise_of_the_Triad_Dark_War_4.desktop
+  - name: "sam_max_hit_the_road"
+    full_name: "Sam and Max Hit the Road"
+    installer: "sam_and_max_hit_the_road_en_gog_2_20100.sh"
+    platform_type: "scummvm"
+    data_source: "gog"
+    data_dir: "data"
+    data_files:
+      - monster.sou
+      - samnmax.000
+      - samnmax.001
+    desktop_files:
+      - gog_com-Sam_and_Max_Hit_the_Road_1.desktop
+  - name: "shadow_warrior_classic_redux"
+    full_name: "Shadow Warrior Classic Redux"
+    installer: "shadow_warrior_classic_redux_en_1_0_16382.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Shadow_Warrior_Classic_Redux_1.desktop
+  - name: "shadow_warrior_complete"
+    full_name: "Shadow Warrior (Complete)"
+    installer: "gog_shadow_warrior_classic_complete_2.0.0.4.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Shadow_Warrior_Classic_Complete_1.desktop
+      - gog_com-Shadow_Warrior_Classic_Complete_2.desktop
+      - gog_com-Shadow_Warrior_Classic_Complete_3.desktop
+      - gog_com-Shadow_Warrior_Classic_Complete_4.desktop
+      - gog_com-Shadow_Warrior_Classic_Complete_5.desktop
+  - name: "shadowrun_dragonfall_directors_cut"
+    full_name: "Shadowrun Dragonfall"
+    installer: "gog_shadowrun_dragonfall_director_s_cut_2.6.0.11.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Shadowrun_Dragonfall_Directors_Cut_1.desktop
+      - gog_com-Shadowrun_Dragonfall_Directors_Cut_2.desktop
+  - name: "sid_meiers_civilization_beyond_earth"
+    full_name: "Sid Meier's Civilization - Beyond Earth"
+    steam_id: 8930
+    platform_type: "steam_shortcut"
+  - name: "sid_meiers_civilization_v"
+    full_name: "Sid Meier's Civilization V"
+    steam_id: 8930
+    platform_type: "steam_shortcut"
+  - name: "silent_service"
+    full_name: "Silent Service"
+    installer: "gog_silent_service_2.0.0.8.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Silent_Service_1.desktop
+  - name: "silent_service_2"
+    full_name: "Silent Service 2"
+    installer: "gog_silent_service_2_2.1.0.9.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Silent_Service_2_1.desktop
+  - name: "star_trek_25th_anniversary"
+    full_name: "Star Trek 25th Anniversary"
+    installer: "gog_star_trek_25th_anniversary_2.0.0.6.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Star_Trek_25th_Anniversary_1.desktop
+      - gog_com-Star_Trek_25th_Anniversary_2.desktop
+  - name: "star_trek_judgment_rites"
+    full_name: "Star Trek Judgment Rites"
+    installer: "gog_star_trek_judgment_rites_2.0.0.10.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Star_Trek_Judgment_Rites_1.desktop
+      - gog_com-Star_Trek_Judgment_Rites_2.desktop
+  - name: "stargunner"
+    full_name: "Stargunner"
+    installer: "gog_stargunner_2.0.0.10.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Stargunner_1.desktop
+      - gog_com-Stargunner_2.desktop
+  - name: "strife_veteran_edition"
+    full_name: "Strife (Veteran Edition)"
+    installer: "gog_the_original_strife_veteran_edition_2.0.0.1.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-The_Original_Strife_Veteran_Edition_1.desktop
+  - name: "stunt_island"
+    full_name: "Stunt Island"
+    installer: "gog_stunt_island_2.0.0.2.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Stunt_Island_1.desktop
+      - gog_com-Stunt_Island_2.desktop
+  - name: "sunrider_mask_of_arcadius"
+    full_name: "Sunrider Mask of Arcadius"
+    installer: "sunrider_mask_of_arcadius_en_gog_1_21014.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Sunrider_Mask_of_Arcadius_1.desktop
+  - name: "star_wars_dark_forces"
+    full_name: "Star Wars - Dark Forces"
+    installer: "gog_star_wars_dark_forces_2.0.0.10.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-STAR_WARS_Dark_Forces_1.desktop
+      - gog_com-STAR_WARS_Dark_Forces_2.desktop 
+  - name: "star_wars_rebel_assault_1"
+    full_name: "Star Wars - Rebel Assault"
+    installer: "gog_star_wars_rebel_assault_2.1.0.5.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-STAR_WARS_Rebel_Assault_1.desktop
+  - name: "star_wars_rebel_assault_2"
+    full_name: "Star Wars - Rebel Assault 2"
+    installer: "gog_star_wars_rebel_assault_2_2.1.0.5.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-STAR_WARS_Rebel_Assault_2_1.desktop
+  - name: "star_wars_tie_fighter_1994"
+    full_name: "Star Wars - TIE Fighter 1994"
+    installer: "gog_star_wars_tie_fighter_1994_2.0.0.4.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-STAR_WARS_Tie_Fighter_1994_1.desktop
+      - gog_com-STAR_WARS_Tie_Fighter_1994_2.desktop 
+  - name: "star_wars_tie_fighter_special_edition"
+    full_name: "Star Wars - TIE Fighter Special Edition"
+    installer: "gog_star_wars_tie_fighter_special_edition_2.1.0.3.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-STAR_WARS_Tie_Fighter_Special_Edition_1.desktop
+      - gog_com-STAR_WARS_Tie_Fighter_Special_Edition_2.desktop
+  - name: "star_wars_x_wing_1993"
+    full_name: "Star Wars - X-Wing 1993"
+    installer: "gog_star_wars_x_wing_1993_2.0.0.4.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-STAR_WARS_X_Wing_1993_1.desktop
+      - gog_com-STAR_WARS_X_Wing_1993_2.desktop
+  - name: "star_wars_x_wing_special_edition"
+    full_name: "Star Wars - X-Wing Special Edition"
+    installer: "gog_star_wars_x_wing_special_edition_2.0.0.3.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-STAR_WARS_X_Wing_Special_Edition_1.desktop
+      - gog_com-STAR_WARS_X_Wing_Special_Edition_2.desktop
+  - name: "the_bards_tale"
+    full_name: "The Bard's Tale"
+    installer: "gog_the_bard_s_tale_2.0.0.3.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-The_Bards_Tale_1.desktop
+  - name: "the_dig"
+    full_name: "The Dig"
+    installer: "the_dig_en_gog_2_20100.sh"
+    platform_type: "scummvm"
+    data_source: "gog"
+    data_dir: "data"
+    data_files:
+      - DIG.LA0
+      - DIG.LA1
+      - DIGMUSIC.BUN
+      - DIGVOICE.BUN
+      - _other
+      - toc.ini
+      - VIDEO
+    desktop_files:
+      - gog_com-The_Dig_1.desktop
+  - name: "the_king_of_fighters_2002"
+    full_name: "The King of Fighters 2002"
+    installer: "gog_the_king_of_fighters_2002_2.0.0.1.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-The_King_of_Fighters_2002_1.desktop
+  - name: "the_witcher_2"
+    full_name: "The Witcher 2 - Assassins of Kings"
+    installer: "the_witcher_2_assassins_of_kings_enhanced_edition_en_release_3_20150306204412_20992.sh"
+    platform_type: "linux"
+    desktop_files:
+      - "gog_com-The_Witcher_2_Assassins_Of_Kings_Enhanced_Edition_1.desktop"
+  - name: "toonstruck"
+    full_name: "Toonstruck"
+    installer: "toonstruck_en_gog_2_20292.sh"
+    platform_type: "scummvm"
+    data_source: "gog"
+    data_dir: "data/Toonstruck"
+    data_files:
+      - ACT1
+      - ACT2
+      - BURST
+      - MISC
+      - toon.dat
+    desktop_files:
+      - gog_com-Toonstruck_1.desktop
+  - name: "trine_enchanted_edition"
+    full_name: "Trine Enchanted Edition"
+    installer: "gog_trine_enchanted_edition_2.0.0.2.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Trine_Enchanted_Edition_1.desktop
+  - name: "trine_2_complete_story"
+    full_name: "Trine 2 (Complete Story)"
+    installer: "gog_trine_2_complete_story_2.0.0.5.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Trine_2_Complete_Story_1.desktop
+  - name: "trine_3_the_artifacts_of_power"
+    full_name: "Trine 3 - The Artifacts of Power"
+    installer: "gog_trine_3_the_artifacts_of_power_2.2.0.4.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Trine_3_The_Artifacts_of_Power_1.desktop
+  - name: "warsow"
+    full_name: "Warsow"
+    installer: "gog_warsow_2.1.0.3.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Warsow_1.desktop
+  - name: xenonauts
+    full_name: "Xenonauts"
+    installer: "xenonauts_en_1_65_21328.sh"
+    platform_type: "linux"
+    desktop_files:
+      - gog_com-Xenonauts_1.desktop
+  - name: "zak_mckracken_and_the_alien_mindbenders"
+    full_name: "Zak McKracken and the Alien Mindbenders"
+    installer: "zak_mckracken_and_the_alien_mindbenders_en_gog_2_20099.sh"
+    platform_type: "scummvm"
+    data_source: "gog"
+    data_dir: "data"
+    data_files:
+      - 00.LFL
+      - 01.LFL
+      - 02.LFL
+      - 03.LFL
+      - 04.LFL
+      - 05.LFL
+      - 06.LFL
+      - 07.LFL
+      - 08.LFL
+      - 09.LFL
+      - 10.LFL
+      - 11.LFL
+      - 12.LFL
+      - 13.LFL
+      - 14.LFL
+      - 15.LFL
+      - 16.LFL
+      - 17.LFL
+      - 18.LFL
+      - 19.LFL
+      - 20.LFL
+      - 21.LFL
+      - 22.LFL
+      - 23.LFL
+      - 24.LFL
+      - 25.LFL
+      - 26.LFL
+      - 27.LFL
+      - 28.LFL
+      - 29.LFL
+      - 30.LFL
+      - 31.LFL
+      - 32.LFL
+      - 33.LFL
+      - 34.LFL
+      - 35.LFL
+      - 36.LFL
+      - 37.LFL
+      - 38.LFL
+      - 39.LFL
+      - 40.LFL
+      - 41.LFL
+      - 42.LFL
+      - 43.LFL
+      - 44.LFL
+      - 45.LFL
+      - 46.LFL
+      - 47.LFL
+      - 48.LFL
+      - 49.LFL
+      - 50.LFL
+      - 51.LFL
+      - 52.LFL
+      - 53.LFL
+      - 54.LFL
+      - 55.LFL
+      - 56.LFL
+      - 57.LFL
+      - 58.LFL
+      - 59.LFL
+      - 98.LFL
+      - 99.LFL
+      - FDD/
+      - Track1.mp3
+      - Track10.mp3
+      - Track11.mp3
+      - Track12.mp3
+      - Track13.mp3
+      - Track14.mp3
+      - Track15.mp3
+      - Track16.mp3
+      - Track17.mp3
+      - Track18.mp3
+      - Track19.mp3
+      - Track2.mp3
+      - Track20.mp3
+      - Track21.mp3
+      - Track3.mp3
+      - Track4.mp3
+      - Track5.mp3
+      - Track6.mp3
+      - Track7.mp3
+      - Track8.mp3
+      - Track9.mp3
+    desktop_files:
+      - gog_com-Zak_McKracken_and_the_Alien_Mindbenders_1.desktop

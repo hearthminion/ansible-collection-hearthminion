@@ -1,0 +1,3 @@
+- hosts: retropie
+  roles:
+    - bloodymage.rebeldream.retropie

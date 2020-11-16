@@ -1,0 +1,199 @@
+# ======================================================================
+#
+# Check if Repo exists
+#
+# ======================================================================
+
+# ======================================================================
+#
+# Checkout Master Branch
+#
+# Only execute if repo already exists
+#
+# ======================================================================
+- name: "Checkout Master Branch"
+  command: "git checkout master"
+  args:
+    chdir: "/opt/RetroPie-Setup"
+  become: yes
+  become_user: "{{ game_user }}"
+  tags:
+    - retropie_install
+
+- name: Download RetroPie
+  git:
+    repo: 'https://github.com/RetroPie/RetroPie-Setup.git'
+    dest: "/opt/RetroPie-Setup"
+  become: yes
+  become_user: "{{ game_user }}"
+  tags:
+    - retropie_install
+
+# ======================================================================
+#
+# Add My Personal Alternate Remote
+#
+# Only add if not already present
+#
+# ======================================================================
+# - name: "Add My alternate remote"
+#   command: "git remote add github git@github.com:gderber/RetroPie-Setup.git"
+#   args:
+#     chdir: "/opt/RetroPie-Setup"
+#   become: yes
+#   become_user: "{{ game_user }}"
+
+- name: "Checkout My Development Branch"
+  command: "git checkout develop"
+  args:
+    chdir: "/opt/RetroPie-Setup"
+  become: yes
+  become_user: "{{ game_user }}"
+  tags:
+    - retropie_install
+# ======================================================================
+#
+# Create Global Scripts for RetroPie Scripts
+#
+# We use scripts rather than symlinks because the retropie scripts
+# have library scripts that brake when using symlinks.
+#
+# ======================================================================
+- name: Create Global scripts for RetroPie Scrips
+  template:
+    src: "{{ role_path }}/templates/retropie_scripts.j2"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: '0755' 
+  loop:
+    - retropie_setup.sh
+    - retropie_packages.sh
+  tags:
+    - retropie_install
+
+# ======================================================================
+#
+# https://github.com/adrianmoisey/ansible-retropie/
+#
+# ======================================================================
+- name: Install and configure Core Packages
+  shell: >-
+    retropie_packages.sh {{ item }} depends;
+    retropie_packages.sh {{ item }} install;
+    retropie_packages.sh {{ item }} configure
+  loop:
+    - emulationstation
+    - retroarch
+    - retropiemu
+  tags:
+    - retropie_install
+
+- name: Install and configure runcommand
+  command: "{{ item }}"
+  with_items:
+    - sudo retropie_packages.sh runcommand depends
+    - sudo retropie_packages.sh runcommand install_bin
+  tags:
+    - retropie_install
+
+- name: Install and configure Main Packages
+  shell: >-
+    retropie_packages.sh {{ item }} depends;
+    retropie_packages.sh {{ item }} install;
+    retropie_packages.sh {{ item }} configure
+  with_items:
+    - mupen64plus
+    - lr-atari800
+    - lr-beetle-ngp
+    - lr-beetle-pce-fast
+    - lr-beetle-psx
+    - lr-beetle-supergrafx
+    - lr-caprice32
+    - lr-fbneo
+    - lr-fceumm
+    - lr-fuse
+    - lr-gambatte
+    - lr-genesis-plus-gx
+    - lr-handy
+    - lr-mame
+    - lr-mgba
+    - lr-mupen64plus
+    - lr-nestopia
+    - lr-parallel-n64
+    - lr-picodrive
+    - lr-prosystem
+    - lr-quicknes
+    - lr-snes9x
+    - lr-stella2014
+    - lr-vba-next
+    - lr-vecx
+  tags:
+    - retropie_install
+
+- name: Install and configure Optional Packages
+  shell: >-
+    retropie_packages.sh {{ item }} depends;
+    retropie_packages.sh {{ item }} install;
+    retropie_packages.sh {{ item }} configure
+  loop:
+    - dosbox
+    - scummvm
+    - scraper
+    - skyscraper
+  tags:
+    - retropie_install
+
+- name: Install and configure Experimental Packages
+  shell: >-
+    retropie_packages.sh {{ item }} depends;
+    retropie_packages.sh {{ item }} install;
+    retropie_packages.sh {{ item }} configure
+  loop:
+    - dolphin
+    - pcsx2
+    - lr-dolphin
+    - lr-dosbox
+    - lr-scummvm
+    - launchingimages
+  tags:
+    - retropie_install
+
+- name: Install and configure Driver Packages
+  shell: >-
+    retropie_packages.sh {{ item }} depends;
+    retropie_packages.sh {{ item }} install;
+    retropie_packages.sh {{ item }} configure
+  loop:
+    - streamcontroller
+  tags:
+    retropie_install
+
+# - name: Install Roms
+#   unarchive:
+#     src: "/srv/games/roms/{{ item }}.tar.xz"
+#     dest: "/home/{{ game_user }}/RetroPie/roms/"
+#     owner: "{{ game_user }}"
+#     group: "{{ game_user }}"
+#     mode: "0644"
+#     remote_src: yes
+#   become: yes
+#   become_user: "{{ game_user }}"
+#   loop:
+#     - atari2600
+#     - atari5200
+#     - atari7800
+#     - atarijaguar
+#     - c64
+#     - gb
+#     - gbc
+#     - gc
+#     - megadrive
+#     - n64
+#     - nes
+#     - pc
+#     - psx
+#     - scummvm
+#     - snes
+#     - wii
+#     - wiiu
+#   tags:
+#     - retropie_install

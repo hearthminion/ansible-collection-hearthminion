@@ -1,0 +1,5 @@
+- hosts: localhost
+  tasks:
+    - name: url lookup splits lines by default
+      debug: msg="IP Addr = {{ item.split(' ')[0] }}  URL = {{ item.split(' ')[1] }}"
+      loop: "{{ lookup('url', 'https://raw.githubusercontent.com/RiiConnect24/DNS-Server/master/dns_zones-hosts.txt', wantlist=True)[3:] }}"

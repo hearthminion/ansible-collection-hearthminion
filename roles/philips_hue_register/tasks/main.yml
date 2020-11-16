@@ -1,0 +1,38 @@
+---
+# tasks file for philips-hue
+- name: PROMPT USER TO PRESS PHYSICAL BUTTON HUE HUB
+  pause:
+    prompt: "Press the button on the hub now..."
+  delegate_to: localhost
+  tags:
+    - philips-hue-register
+
+- name: GRAB UNIQUE USERNAME
+  uri:
+    url: "http://{{ ansible_host }}/api"
+    method: POST
+    body: '{{ body_info | to_json }}'
+  register: username_info
+  become: no
+  delegate_to: localhost
+  tags:
+    - philips-hue-register
+
+- name: PRINT DATA TO TERMINAL WINDOW
+  debug:
+    var: username_info.json
+    verbosity: 1
+  become: no
+  delegate_to: localhost
+  tags:
+    - philips-hue-register
+
+- name: Save Username to Inventory Definitions
+  lineinfile:
+    path: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}/{{ inventory_hostname }}.yml"
+    regexp: '^philips_hue_username'
+    insertafter: EOF
+    line: 'philips_hue_username: {{ username_info.json[0]["success"]["username"] }}'
+  delegate_to: localhost
+  tags:
+    - philips-hue-register

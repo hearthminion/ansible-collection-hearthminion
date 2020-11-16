@@ -1,0 +1,101 @@
+# ======================================================================
+#
+#
+#
+# ======================================================================
+- name: Add Apt signing keys
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: "{{ item }}"
+  loop:
+    - "82D96E430A1F1C0F0502747E37B90EDD4E3EFAE4"  # Lutris
+    - "AFDF4CC6A4F32AA9395FAE8F423A2125D782A00F"  # CDemu
+    - "2388FF3BE10A76F638F80723FCAE110B1118213C"  # Nvidia
+
+- name: Add repository
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+    filename: graphics-drivers
+  loop:
+    - "deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu {{ ansible_distribution_release }} main"
+    - "deb-src http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu {{ ansible_distribution_release }} main "
+
+# - name: Add Apt signing key for Play on Linux
+#   apt_key:
+#     url: http://deb.playonlinux.com/public.gpg
+#     state: present
+
+# # Add specified repository into sources list using specified filename.
+# - name: Add repository
+#   apt_repository:
+#     repo: 'deb http://deb.playonlinux.com/ {{ ansible_distribution_release }} main'
+#     state: absent
+#     filename: playonlinux
+
+# Add specified repository into sources list using specified filename.
+- name: Add repository
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+    filename: lutris
+  loop:
+    - "deb http://ppa.launchpad.net/lutris-team/lutris/ubuntu {{ ansible_distribution_release }} main"
+    - "deb-src http://ppa.launchpad.net/lutris-team/lutris/ubuntu {{ ansible_distribution_release }} main"
+
+# Add specified repository into sources list using specified filename.
+- name: Add repository for CDemu
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+    filename: cdemu
+  loop:
+    - "deb http://ppa.launchpad.net/cdemu/ppa/ubuntu {{ ansible_distribution_release }} main"
+    - "deb-src http://ppa.launchpad.net/cdemu/ppa/ubuntu {{ ansible_distribution_release }} main"
+
+- name: "Ensure all packages are up to date (Safe upgrade)"
+  apt:
+    update_cache: yes
+    upgrade: yes
+    cache_valid_time: 86400 #One day
+
+# ==================================================================================================
+#
+# Install required packages
+#
+# ==================================================================================================
+- name: Install Required Packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+
+# ==================================================================================================
+#
+# Install Udev Rules for Dolphin Bar's Wiimotes
+#
+# ==================================================================================================
+- name: Install Udev Rules for Dolphin Bar's Wiimotes
+  copy:
+    src: "{{ role_path }}/files/99-wiimote.rules"
+    dest: "/etc/udev/rules.d/99-wiimote.rules"
+    mode: "0644"
+    owner: root
+    group: root
+
+# ==================================================================================================
+#
+# Install Udev Rules for Dolphin Bar's Wiimotes
+#
+# ==================================================================================================
+- name: Install Udev Rules for Steam Controller
+  copy:
+    src: "{{ role_path }}/files/99-steamcontroller.rules"
+    dest: "/etc/udev/rules.d/99-steamcontroller.rules"
+    mode: "0644"
+    owner: root
+    group: root
+
+- name: Install RetroPie
+  include: retropie_install.yaml
+  tags:
+    - retropie_install

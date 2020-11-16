@@ -1,0 +1,60 @@
+---
+# tasks file for homeassistant
+- name: Include OS-specific variables.
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_network_os | default(none) }}.yml"
+        - "{{ ansible_distribution | lower }}.yml"
+        - "{{ ansible_distribution.split(' ')[0] | lower }}.yml"
+        - "{{ ansible_os_family | lower }}_family.yml"
+        - "{{ ansible_system | lower }}.yml"
+        - main.yml
+      paths:
+        - "vars"
+  become: no
+  tags:
+    - homeassistant
+
+- name: "Install packages"
+  package:
+    name: "{{ packages }}"
+    state: present
+  tags:
+    - homeassistant
+    - install-packages
+
+- name: "Install templated config files"
+  template:
+    src: "{{ item.name }}.yml.j2"
+    dest: "{{ homeassistant_config_dir }}/{{ item.name }}.yaml"
+    owner: root
+    group: root
+    mode: "{{ item.mode | default('0644')}}"
+    backup: yes
+  become: yes
+  loop: "{{ homeassistant_config_files }}"
+  #notify: restart homeassistant
+  tags:
+    - homeassistant
+
+# ==================================================================================================
+#
+# Task: Create Cron to reboot system daily at 4 AM.
+#
+# Yes, we know this can be done through Home Assistant.  This is a way to protect against a failure
+# of Home Assistant itself.
+#
+# TODO: Create script that checks for a valid configuration before rebooting.  If configuration is
+#       not valid, email <user> <log output from check> to inform the user instead of rebooting
+#
+# ==================================================================================================
+- name: "Create cron to reboot system daily at 4 AM."
+  cron:
+    name: "Reboot System"
+    minute: "0"
+    hour: "4"
+    job: "/sbin/reboot"
+  tags:
+    - homeassistant

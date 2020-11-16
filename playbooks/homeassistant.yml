@@ -1,0 +1,26 @@
+- hosts: hue_hubs
+  gather_facts: no
+  roles:
+    - hearthminion.hearthminion.philips_hue_register
+
+- hosts: sensehat
+  roles:
+    - hearthminion.hearthminion.sensehat
+
+# - hosts: mqtt
+
+# - hosts: bluetooth
+
+# - hosts: owntracks
+
+# - hosts: openzwave
+
+# - hosts: almond
+
+# - hosts: ada
+
+# - hosts:
+
+- hosts: homeassistant
+  roles:
+    - hearthminion.hearthminion.homeassistant

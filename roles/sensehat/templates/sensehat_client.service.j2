@@ -1,0 +1,10 @@
+[Unit]
+Description=Sensehat
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/sensehat_client.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

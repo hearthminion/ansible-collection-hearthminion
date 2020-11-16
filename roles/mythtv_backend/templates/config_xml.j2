@@ -1,0 +1,21 @@
+<Configuration>
+  <Database>
+    <PingHost>1</PingHost>
+    <Host>{{ mythtv_database_host }}</Host>
+    <UserName>{{ mythtv_database_username }}</UserName>
+    <Password>{{ mythtv_database_password }}</Password>
+    <DatabaseName>{{ mythtv_database_name }}</DatabaseName>
+    <Port>3306</Port>
+  </Database>
+  <WakeOnLAN>
+    <Enabled>0</Enabled>
+    <SQLReconnectWaitTime>0</SQLReconnectWaitTime>
+    <SQLConnectRetry>5</SQLConnectRetry>
+    <Command>echo 'WOLsqlServerCommand not set'</Command>
+  </WakeOnLAN>
+  <UPnP>
+    <UDN>
+      <MediaRenderer>8ef69c38-3bd1-4972-8fbb-cd1dc641ec1b</MediaRenderer>
+    </UDN>
+  </UPnP>
+</Configuration>
