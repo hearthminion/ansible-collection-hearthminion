@@ -1,5 +1,0 @@
-# Steam controller keyboard/mouse mode
-SUBSYSTEM=="usb", ATTRS{idVendor}=="28de", GROUP="input", MODE="0660"
-
-# Steam controller gamepad mode
-KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
