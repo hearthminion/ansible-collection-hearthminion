@@ -1,5 +1,0 @@
----
-# defaults file for philips-hue
-body_info:
-    devicetype: "Ansible!"
-

@@ -1,8 +1,0 @@
----
-# tasks file for philips_hue_configure
-- name: TURN LIGHTS TO MANGO
-  uri:
-    url: "http://{{ ansible_host }}/api/{{ philips_hue_username }}/lights/{{ item }}/state"
-    method: PUT
-    body: '{{ansible_mango|to_json}}'
-  loop: "{{ range(1, light_info.json.lights | length + 1)|list }}"

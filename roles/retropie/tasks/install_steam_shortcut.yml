@@ -1,7 +1,0 @@
-- name: "Create '{{ game.full_name }}' Starter Script"
-  template:
-    src: "{{ role_path }}/templates/steam_starter_script.j2"
-    dest: "/home/{{ game_user }}/RetroPie/roms/ports/{{ game.full_name }}.sh"
-    mode: "0755"
-  become: yes
-  become_user: "{{ game_user }}"
