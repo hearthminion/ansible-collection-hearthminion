@@ -1,0 +1,38 @@
+---
+# defaults file for fortune
+packages:
+  - fortune-mod
+  - fortunes
+  - fortunes-off
+  - fortunes-min
+  - fortunes-bofh-excuses
+
+fortunes:
+  - 5thelement
+  - arrested
+  - chapterhouse-dune
+  - community
+  - discworld
+  - dune-messiah
+  - firefly
+  - gems
+  - heretics-of-dune
+  - house-atreides
+  - parksandrec
+  - starwars
+  - xfiles
+  - archer
+  - chalkboard
+  - children-of-dune
+  - deepthoughts
+  - dune
+  - fgump
+  - futurama
+  - god-emperor
+  - hitchhiker
+  - house-harkonnen
+  - startrek
+  - venturebros
+  - zippy
+
+fortunes_dir: "/usr/share/games/fortunes"
