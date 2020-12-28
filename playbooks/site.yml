@@ -1,1 +1,2 @@
-- import_playbook: homeassistant.yml
+- import_playbook: games.yml
+- import_playbook: mythtv.yml

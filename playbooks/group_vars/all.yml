@@ -1,0 +1,58 @@
+#
+# Decisions
+hearthminion_overwrite_password: no
+hearthminion_use_source_code_repos: no
+hearthminion_password_length: "42"
+
+# Domain Information
+hearthminion_default_domain: internal.example.com
+hearthminion_domain: "{{ ansible_domain | default(hearthminion_default_domain) }}"
+hearthminion_realm: "{{ hearthminion_domain | upper }}"
+hearthminion_domain_list: "{{ hearthminion_domain.split('.')[-2:] }}"
+hearthminion_root_domain: "{{ hearthminion_domain_list | join('.') }}"
+hearthminion_tld: "{{ hearthminion_domain.split('.')[-1] }}"
+hearthminion_min_domain_id_number: 10000
+hearthminion_base_dn: "DC={{ hearthminion_org_unit_name | upper }},DC={{ hearthminion_org_name | upper }},DC={{ hearthminion_tld | upper }}"
+hearthminion_user_dn: "CN=users,{{ hearthminion_base_dn }}"
+hearthminion_group_dn: "cn=users,{{ hearthminion_base_dn }}"
+hearthminion_config_dn: "CN=Configuration,{{ hearthminion_base_dn }}"
+hearthminion_schema_dn: "CN=Schema,{{ hearthminion_config_dn }}"
+
+# Organization Info
+hearthminion_org_name: "{{ hearthminion_domain.split('.')[1] }}"
+hearthminion_org_unit_name: "{{ hearthminion_domain.split('.')[0] }}"
+hearthminion_country: "{{ country }}"
+hearthminion_region: "{{ region }}"
+hearthminion_state: "{{ hearthminion_region }}"
+hearthminion_city: "{{ city }}"
+hearthminion_zones:
+  - internal
+  - dmz
+
+# Host Information
+hearthminion_fqdn: "{{ ansible_fqdn | default(inventory_hostname_short + '.' + hearthminion_domain) }}"
+hearthminion_hostname: "{{ hearthminion_fqdn.split('.')[0] }}"
+# Eliminate after verifying no longer in use
+hearthminion_hostname_short: "{{ hearthminion_hostname }}"
+
+
+# ==================================================================================================
+#
+#
+#
+# ==================================================================================================
+__network_os: "{{ ansible_network_os | default(none) }}"
+__lsb_id: "{{ ansible_lsb.id | default(none) }}"
+__distribution: "{{ ansible_distribution | default(none) }}"
+__os_family: "{{ ansible_os_family | default(none) }}"
+__system: "{{ ansible_system | default(none) }}"
+__distribution_short: "{{ __distribution.split(' ')[0] }}"
+
+__os_variables_files:
+  - "{{ __network_os }}.yml"
+  - "{{ __lsb_id | lower }}.yml"
+  - "{{ __distribution | lower }}.yml"
+  - "{{ __distribution_short | lower }}.yml"
+  - "{{ __os_family | lower }}_family.yml"
+  - "{{ __system | lower }}.yml"
+  - main.yml

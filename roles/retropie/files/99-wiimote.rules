@@ -1,5 +1,0 @@
-# Mayflash Dolphin Bar
-SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="0306", MODE="0666"
-
-# Wii Motes
-SUBSYSTEM=="hidraw", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="0306", MODE="0666"

@@ -1,6 +1,0 @@
----
-# defaults file for sensehat
-pip_packages:
-  - paho-mqtt
-
-mqtt_host: "{{ groups['mqtt_servers'][0] }}"

@@ -1,0 +1,7 @@
+- hosts: mythbackend
+  roles:
+    - hearthminion.hearthminion.mythtv_backend
+
+- hosts: mythfrontend
+  roles:
+    - hearthminion.hearthminion.mythtv_frontend
