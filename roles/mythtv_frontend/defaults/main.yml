@@ -1,0 +1,18 @@
+---
+# defaults file for mythtv_frontend
+packages:
+  - mythtv-frontend
+  - mytharchive
+  - mythbrowser
+  - mythweather
+  - mythgame
+  - mythnews
+  - mythnetvision
+  - mythmusic
+  - libmyth-python
+  - libmythtv-perl
+
+mythtv_db_server: "{{ groups['mysql_compatible_servers'][0] }}"
+mythtv_db_name: "mythconverg"
+mythtv_db_user: "mythtv"
+mythtv_db_password: "password"
