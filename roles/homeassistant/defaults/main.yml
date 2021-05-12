@@ -1,0 +1,15 @@
+---
+# defaults file for homeassistant
+hearthminion_packages:
+  - python3-docker
+  - libxml2-dev
+  - libxslt1-dev
+  - zlib1g-dev
+
+homeassistant_config_dir: "/srv/homeassistant/config"
+
+homeassistant_config_files:
+  - name: secrets
+    mode: "0644"
+
+homeassistant_caldav: no
