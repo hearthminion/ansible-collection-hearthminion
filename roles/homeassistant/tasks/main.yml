@@ -14,6 +14,8 @@
       paths:
         - "vars"
   become: no
+  tags:
+    - upgrade
 
 - name: "Install packages"
   ansible.builtin.package:
@@ -22,6 +24,7 @@
   become: yes
   tags:
     - install-packages
+    - upgrade
 
 - name: "Check if we are upgrading homeassistant."
   ansible.builtin.set_fact:
@@ -53,6 +56,8 @@
     tty: no
     pull: "{{ __homeassistant_upgrade }}"
   become: yes
+  tags:
+    - upgrade
 
 # ==================================================================================================
 #
@@ -83,6 +88,8 @@
     - item.enabled is defined
     - item.enabled
   notify: reload nginx
+  tags:
+    - upgrade
 
 - name: "Enable nginx site."
   ansible.builtin.file:
@@ -100,6 +107,8 @@
     - item.enabled is defined
     - item.enabled
   notify: reload nginx
+  tags:
+    - upgrade
 
 - name: "Ensure default site does not exist."
   ansible.builtin.file:
@@ -107,6 +116,8 @@
     state: "absent"
   become: yes
   notify: reload nginx
+  tags:
+    - upgrade
 
 # ==================================================================================================
 #
