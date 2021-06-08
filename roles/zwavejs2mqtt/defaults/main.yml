@@ -1,0 +1,24 @@
+---
+# defaults file for zwavejs2mqtt
+hearthminion_packages: []
+
+zwavejs2mqtt_serial_dev: "/dev/ttyACM0"
+zwavejs2mqtt_config_dir: "/srv/zwavejs2mqtt"
+zwavejs2mqtt_devices:
+  - "{{ zwavejs2mqtt_serial_dev }}"
+
+zwavejs2mqtt_mqtt_enabled: no
+zwavejs2mqtt_ws_enabled: yes
+zwavejs2mqtt_nginx_default_server: no
+
+# ==================================================================================================
+#
+# Do not modify the following variables.  They are set by playbook tasks based on other settings, or
+# are hardcoded based on zwavejs2mqtt docker container requirements.
+#
+# ==================================================================================================
+__zwavejs2mqtt_exposed_ports:
+  - "{{ __zwavejs2mqtt_host_port }}:{{ __zwavejs2mqtt_host_port }}"
+__zwavejs2mqtt_host_port: 8091
+__zwavejs2mqtt_ws_port: 3000
+__zwavejs2mqtt_upgrade: no

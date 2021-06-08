@@ -1,5 +1,5 @@
 ---
-# tasks file for homeassistant
+# tasks file for zwavejs2mqtt
 - name: Include OS-specific variables.
   include_vars: "{{ lookup('first_found', params) }}"
   vars:
@@ -23,25 +23,33 @@
   tags:
     - install-packages
 
-- name: "Check if we are upgrading homeassistant."
+- name: "Check if we need the websocket port enabled."
   ansible.builtin.set_fact:
-    __homeassistant_upgrade: yes
+    __zwavejs2mqtt_exposed_ports: "{{ __zwavejs2mqtt_exposed_ports }} + [ {{ __zwavejs2mqtt_ws_port }}:{{ __zwavejs2mqtt_ws_port }} ]"
+  become: no
+  when:
+    - zwavejs2mqtt_ws_enabled
+
+- name: "Check if we are upgrading zwavejs2mqtt."
+  ansible.builtin.set_fact:
+    __zwavejs2mqtt_upgrade: yes
   become: no
   tags:
     - never
     - upgrade
     - upgrade-homeassistant
 
-- name: "Install Home Assistant Docker Container."
+- name: "Install zwavejs2mqtt Docker Container."
   community.docker.docker_container:
-    name: "homeassistant"
-    image: "homeassistant/raspberrypi3-homeassistant:stable"
+    name: "zwavejs2mqtt"
+    image: "zwavejs/zwavejs2mqtt:latest"
     restart_policy: unless-stopped
     network_mode: host
     volumes:
-      - "/etc/localtime:/etc/localtime:ro"
-      - "{{ homeassistant_config_dir }}:/config"
+      - "{{ zwavejs2mqtt_config_dir }}:/usr/src/app/store"
+    exposed_ports: "{{ __zwavejs2mqtt_exposed_ports }}"
     detach: yes
+    devices: "{{ zwavejs2mqtt_devices }}"
     init: yes
     container_default_behavior: no_defaults
     auto_remove: no
@@ -51,7 +59,7 @@
     privileged: no
     read_only: no
     tty: no
-    pull: "{{ __homeassistant_upgrade }}"
+    pull: "{{ __zwavejs2mqtt_upgrade }}"
   become: yes
 
 # ==================================================================================================
@@ -79,7 +87,7 @@
   when:
     - virtual_hosts is defined
     - item.content is defined
-    - item.content == "homeassistant"
+    - item.content == "zwavejs2mqtt"
     - item.enabled is defined
     - item.enabled
   notify: reload nginx
@@ -96,34 +104,7 @@
   when:
     - virtual_hosts is defined
     - item.content is defined
-    - item.content == "homeassistant"
+    - item.content == "zwavejs2mqtt"
     - item.enabled is defined
     - item.enabled
   notify: reload nginx
-
-- name: "Ensure default site does not exist."
-  ansible.builtin.file:
-    path: "/etc/nginx/sites-enabled/default.conf"
-    state: "absent"
-  become: yes
-  notify: reload nginx
-
-# ==================================================================================================
-#
-# Task: Create Cron to reboot system daily at 4 AM.
-#
-# Yes, we know this can be done through Home Assistant.  This is a way to protect against a failure
-# of Home Assistant itself.
-#
-# TODO: Create script that checks for a valid configuration before rebooting.  If configuration is
-#       not valid, email <user> <log output from check> to inform the user instead of rebooting
-#
-# ==================================================================================================
-# - name: "Create cron to reboot system daily at 4 AM."
-#   cron:
-#     name: "Reboot System"
-#     minute: "0"
-#     hour: "4"
-#     job: "/sbin/reboot"
-#   become: yes
-#   tags:

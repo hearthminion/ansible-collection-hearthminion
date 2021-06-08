@@ -1,15 +1,15 @@
 # Ansible managed
 
 server {
-  listen 80 {% if homeassistant_nginx_default_server %}default_server{% endif %};
-  listen [::]:80 {% if homeassistant_nginx_default_server %}default_server{% endif %};
+  listen 80 {% if zwavejs2mqtt_nginx_default_server %}default_server{% endif %};
+  listen [::]:80 {% if zwavejs2mqtt_nginx_default_server %}default_server{% endif %};
   server_name {{ item.name }}.{{ ansible_domain }} {{ item.name }};
   return 301 https://{{ item.name }}.{{ ansible_domain }}$request_uri;
 }
 
 server {
-  listen 443 ssl {% if homeassistant_nginx_default_server %}default_server{% endif %};
-  listen [::]:443 ssl {% if homeassistant_nginx_default_server %}default_server{% endif %};
+  listen 443 ssl {% if zwavejs2mqtt_nginx_default_server %}default_server{% endif %};
+  listen [::]:443 ssl {% if zwavejs2mqtt_nginx_default_server %}default_server{% endif %};
 
   include snippets/{{ hearthminion_hostname }}.conf;
 
@@ -21,6 +21,6 @@ server {
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
-    proxy_pass http://localhost:{{ homeassistant_port }};
+    proxy_pass http://localhost:{{ __zwavejs2mqtt_host_port }};
   }
 }

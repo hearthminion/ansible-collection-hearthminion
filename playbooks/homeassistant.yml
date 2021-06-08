@@ -26,3 +26,9 @@
     - role: hearthminion.hearthminion.homeassistant
       tags:
         - homeassistant
+
+- hosts: zwavecontroller
+  roles:
+    - role: hearthminion.hearthminion.zwavejs2mqtt
+      tags:
+        - zwavejs2mqtt

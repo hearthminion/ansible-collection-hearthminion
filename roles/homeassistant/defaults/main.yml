@@ -17,3 +17,10 @@ homeassistant_config_files:
 homeassistant_caldav: no
 
 homeassistant_nginx_default_server: yes
+
+# ==================================================================================================
+#
+# Do not use the remaining varaibles.
+#
+# ==================================================================================================
+__homeassistant_upgrade: no
