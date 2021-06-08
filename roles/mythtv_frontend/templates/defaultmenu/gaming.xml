@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mythmenu name="LIBRARY">
+  <button>
+    <type>VIDEO</type>
+    <text>Steam</text>
+    <action>EXEC /usr/games/steam</action>
+  </button>
+
+  <button>
+    <type>Game</type>
+    <text>Emulation Station</text>
+    <action>EXEC /usr/bin/emulationstation</action>
+  </button>
+
+  <button>
+    <type>GAME</type>
+    <text>Play Games</text>
+    <description>Play video games</description>
+    <action>PLUGIN mythgame</action>
+    <depends>mythgame</depends>
+  </button>
+
+</mythmenu>

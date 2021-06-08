@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- {{ ansible_managed }} -->
+<mythmenu name="LIBRARY">
+{% for service in mythtv_streaming_services %}
+  <button>
+    <type>VIDEO</type>
+    <text>{{ service.text }}</text>
+    <action>{{ service.action }}</action>
+  </button>
+{% endfor %}
+
+</mythmenu>

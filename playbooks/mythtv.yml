@@ -1,7 +1,14 @@
 - hosts: mythbackend
   roles:
-    - hearthminion.hearthminion.mythtv_backend
+    - role: hearthminion.hearthminion.mythtv_backend
+      tags:
+        - mythbackend
+    - role: hearthminion.hearthminion.makemkv
+      tags:
+        - makemkv
 
 - hosts: mythfrontend
   roles:
-    - hearthminion.hearthminion.mythtv_frontend
+    - role: hearthminion.hearthminion.mythtv_frontend
+      tags:
+        - mythfrontend

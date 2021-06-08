@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mythmenu name="LIBRARY">
+
+  <button>
+    <type>VIDEO</type>
+    <text>Watch Amazon Prime Video</text>
+    <action>EXEC /home/mythtv/.local/bin/amazon</action>
+  </button>
+
+  <button>
+    <type>VIDEO</type>
+    <text>Watch Disney+</text>
+    <action>EXEC /home/mythtv/.local/bin/disney</action>
+  </button>
+
+  <button>
+    <type>VIDEO</type>
+    <text>Watch Locast</text>
+    <action>EXEC /home/mythtv/.local/bin/locast</action>
+  </button>
+
+  <button>
+    <type>VIDEO</type>
+    <text>Watch Netflix</text>
+    <action>EXEC /home/mythtv/.local/bin/netflix</action>
+  </button>
+
+  <button>
+    <type>VIDEO</type>
+    <text>Watch Vudu</text>
+    <action>EXEC /home/mythtv/.local/bin/vudu</action>
+  </button>
+
+  <button>
+    <type>VIDEO</type>
+    <text>Watch YouTube</text>
+    <action>EXEC /home/mythtv/.local/bin/youtube</action>
+  </button>
+
+  <button>
+    <type>VIDEO</type>
+    <text>Internet Browser</text>
+    <action>EXEC /home/mythtv/.local/bin/mythtv-browser</action>
+  </button>
+
+</mythmenu>

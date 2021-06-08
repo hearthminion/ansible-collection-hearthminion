@@ -6,10 +6,14 @@ hearthminion_packages:
   - libxslt1-dev
   - zlib1g-dev
 
+homeassistant_port: 8123
 homeassistant_config_dir: "/srv/homeassistant/config"
+
 
 homeassistant_config_files:
   - name: secrets
     mode: "0644"
 
 homeassistant_caldav: no
+
+homeassistant_nginx_default_server: yes

@@ -1,0 +1,59 @@
+---
+# tasks file for makemkv
+- name: Include OS-specific variables.
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files: "{{ __os_variables_files }}"
+      paths:
+        - "vars"
+  become: no
+
+- name: "Install packages"
+  ansible.builtin.package:
+    name: "{{ hearthminion_packages }}"
+    state: present
+  become: yes
+
+# Download packages
+- name: "Download MakeMKV Sources"
+  ansible.builtin.get_url:
+    url: "{{ item.source }}"
+    dest: "/tmp/{{ item.file }}"
+    #checksum: "{{ item.checksum_type }}:{{ item.checksum }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0644'
+  loop: "{{ makemkv_files }}"
+  become: no
+
+- name: "Create Build Directories"
+  ansible.builtin.file:
+    path: "/tmp/{{ item.build_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: yes
+  loop: "{{ makemkv_files }}"
+
+- name: Extract Sources
+  ansible.builtin.unarchive:
+    src: "/tmp/{{ item.file }}"
+    dest: "/tmp/{{ item.build_dir }}"
+    remote_src: yes
+    owner: root
+    group: root
+    extra_opts: [--strip-components=1]
+    #creates: "{{ keycloak_license_path }}"
+  become: yes
+  loop: "{{ makemkv_files }}"
+
+# For OSS package:
+# ./configure
+# make
+# sudo make install
+
+# For Bin package
+# make
+# sudo make install

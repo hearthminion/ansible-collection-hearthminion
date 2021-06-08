@@ -41,7 +41,69 @@
     privileged: no
     read_only: no
     tty: no
-                
+
+# ==================================================================================================
+#
+# This needs another way of checking and disabling.
+#
+# Two sites cannot both have "default_server" set.  So what really needs to happen is a way to check
+# if another site has that value set.  If so, we need to not enable "default_server" in this
+# configuration file.
+#
+# Current workaround is to install our site, and remove "default" site from the enabled servers.
+#
+# This will break setups where "default" site is another website on the host that is in use.
+#
+# ==================================================================================================
+- name: "Install Nginx virtual host config file."
+  ansible.builtin.template:
+    src: "nginx-site.conf.j2"
+    dest: "/etc/nginx/sites-available/{{ item.name }}.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  loop: "{{ virtual_hosts }}"
+  become: yes
+  when:
+    - virtual_hosts is defined
+    - item.content is defined
+    - item.content == "homeassistant"
+    - item.enabled is defined
+    - item.enabled
+  notify: reload nginx
+
+- name: "Enable nginx site."
+  ansible.builtin.file:
+    src: "/etc/nginx/sites-available/{{ item.name }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ item.name }}.conf"
+    owner: root
+    group: root
+    state: "link"
+  loop: "{{ virtual_hosts }}"
+  when:
+    - virtual_hosts is defined
+    - item.content is defined
+    - item.content == "homeassistant"
+    - item.enabled is defined
+    - item.enabled
+  notify: reload nginx
+
+- name: "Ensure default site does not exist."
+  ansible.builtin.file:
+    src: "/etc/nginx/sites-available/{{ item.name }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ item.name }}.conf"
+    owner: root
+    group: root
+    state: "link"
+  loop: "{{ virtual_hosts }}"
+  when:
+    - virtual_hosts is defined
+    - item.content is defined
+    - item.content == "homeassistant"
+    - item.enabled is defined
+    - item.enabled
+  notify: reload nginx
+
 # ==================================================================================================
 #
 # Task: Create Cron to reboot system daily at 4 AM.

@@ -1,6 +1,7 @@
 ---
 # defaults file for config_defaults
-
+hearthminion_hostname: "{{ ansible_hostname_short }}"
+hearthminion_fqdn: "{{ ansible_fqdn }}"
 
 # ==================================================================================================
 #
