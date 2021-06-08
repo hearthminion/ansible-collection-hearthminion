@@ -1,0 +1,33 @@
+---
+# defaults file for makemkv
+hearthminion_packages:
+  - build-essential
+  - pkg-config
+  - libc6-dev
+  - libssl-dev
+  - libexpat1-dev
+  - libavcodec-dev
+  - libgl1-mesa-dev
+  - qtbase5-dev
+  - zlib1g-dev
+
+makemkv_version: "1.16.3"
+makemkv_src_file: "makemkv-oss-{{ makemkv_version }}.tar.gz"
+makemkv_bin_file: "makemkv-bin-{{ makemkv_version }}.tar.gz"
+makemkv_src_url: "http://www.makemkv.com/download/{{ makemkv_src_file }}"
+makemkv_bin_url: "http://www.makemkv.com/download/{{ makemkv_bin_file }}"
+
+makemkv_files:
+  - source: "{{ makemkv_src_url }}"
+    file: "{{ makemkv_src_file }}"
+    build_dir: "makemkv_oss"
+    build_cmds:
+      - "./configure"
+      - "make"
+      - "make install"
+  - source: "{{ makemkv_bin_url }}"
+    file: "{{ makemkv_bin_file }}"
+    build_dir: "makemkv_bin"
+    build_cmds:
+      - "make"
+      - "make install"

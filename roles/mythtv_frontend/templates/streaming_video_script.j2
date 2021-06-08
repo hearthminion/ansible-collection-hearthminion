@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# {{ ansible_managed }}
+
+systemctl stop --user xscreensaver
+
+google-chrome --user-data-dir={{ mythtv_chrome_user_data_dir }} \
+{% if item.app is defined %}
+  --app={{ item.app }} \
+{% endif %}
+{% if item.fullscreen is defined and item.fullscreen %}
+  --start-fullscreen
+{% endif %}
+
+systemctl start --user xscreensaver

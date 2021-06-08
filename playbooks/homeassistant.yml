@@ -1,11 +1,11 @@
-- hosts: hue_hubs
-  gather_facts: no
-  roles:
-    - hearthminion.hearthminion.philips_hue_register
+# - hosts: hue_hubs
+#   gather_facts: no
+#   roles:
+#     - role: hearthminion.hearthminion.philips_hue_register
 
-- hosts: sensehat
-  roles:
-    - hearthminion.hearthminion.sensehat
+# - hosts: sensehat
+#   roles:
+#     - role: hearthminion.hearthminion.sensehat
 
 # - hosts: mqtt
 
@@ -23,4 +23,12 @@
 
 - hosts: homeassistant
   roles:
-    - hearthminion.hearthminion.homeassistant
+    - role: hearthminion.hearthminion.homeassistant
+      tags:
+        - homeassistant
+
+- hosts: zwavecontroller
+  roles:
+    - role: hearthminion.hearthminion.zwavejs2mqtt
+      tags:
+        - zwavejs2mqtt

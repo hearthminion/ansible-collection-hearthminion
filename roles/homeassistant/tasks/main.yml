@@ -1,0 +1,140 @@
+---
+# tasks file for homeassistant
+- name: Include OS-specific variables.
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_network_os | default(none) }}.yml"
+        - "{{ ansible_distribution | lower }}.yml"
+        - "{{ ansible_distribution.split(' ')[0] | lower }}.yml"
+        - "{{ ansible_os_family | lower }}_family.yml"
+        - "{{ ansible_system | lower }}.yml"
+        - main.yml
+      paths:
+        - "vars"
+  become: no
+  tags:
+    - upgrade
+
+- name: "Install packages"
+  ansible.builtin.package:
+    name: "{{ hearthminion_packages }}"
+    state: present
+  become: yes
+  tags:
+    - install-packages
+    - upgrade
+
+- name: "Check if we are upgrading homeassistant."
+  ansible.builtin.set_fact:
+    __homeassistant_upgrade: yes
+  become: no
+  tags:
+    - never
+    - upgrade
+    - upgrade-homeassistant
+
+- name: "Install Home Assistant Docker Container."
+  community.docker.docker_container:
+    name: "homeassistant"
+    image: "homeassistant/raspberrypi3-homeassistant:stable"
+    restart_policy: unless-stopped
+    network_mode: host
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "{{ homeassistant_config_dir }}:/config"
+    detach: yes
+    init: yes
+    container_default_behavior: no_defaults
+    auto_remove: no
+    interactive: no
+    memory: "0"
+    paused: no
+    privileged: no
+    read_only: no
+    tty: no
+    pull: "{{ __homeassistant_upgrade }}"
+  become: yes
+  tags:
+    - upgrade
+
+# ==================================================================================================
+#
+# This needs another way of checking and disabling.
+#
+# Two sites cannot both have "default_server" set.  So what really needs to happen is a way to check
+# if another site has that value set.  If so, we need to not enable "default_server" in this
+# configuration file.
+#
+# Current workaround is to install our site, and remove "default" site from the enabled servers.
+#
+# This will break setups where "default" site is another website on the host that is in use.
+#
+# ==================================================================================================
+- name: "Install Nginx virtual host config file."
+  ansible.builtin.template:
+    src: "nginx-site.conf.j2"
+    dest: "/etc/nginx/sites-available/{{ item.name }}.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  loop: "{{ virtual_hosts }}"
+  become: yes
+  when:
+    - virtual_hosts is defined
+    - item.content is defined
+    - item.content == "homeassistant"
+    - item.enabled is defined
+    - item.enabled
+  notify: reload nginx
+  tags:
+    - upgrade
+
+- name: "Enable nginx site."
+  ansible.builtin.file:
+    src: "/etc/nginx/sites-available/{{ item.name }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ item.name }}.conf"
+    owner: root
+    group: root
+    state: "link"
+  loop: "{{ virtual_hosts }}"
+  become: yes
+  when:
+    - virtual_hosts is defined
+    - item.content is defined
+    - item.content == "homeassistant"
+    - item.enabled is defined
+    - item.enabled
+  notify: reload nginx
+  tags:
+    - upgrade
+
+- name: "Ensure default site does not exist."
+  ansible.builtin.file:
+    path: "/etc/nginx/sites-enabled/default.conf"
+    state: "absent"
+  become: yes
+  notify: reload nginx
+  tags:
+    - upgrade
+
+# ==================================================================================================
+#
+# Task: Create Cron to reboot system daily at 4 AM.
+#
+# Yes, we know this can be done through Home Assistant.  This is a way to protect against a failure
+# of Home Assistant itself.
+#
+# TODO: Create script that checks for a valid configuration before rebooting.  If configuration is
+#       not valid, email <user> <log output from check> to inform the user instead of rebooting
+#
+# ==================================================================================================
+# - name: "Create cron to reboot system daily at 4 AM."
+#   cron:
+#     name: "Reboot System"
+#     minute: "0"
+#     hour: "4"
+#     job: "/sbin/reboot"
+#   become: yes
+#   tags:

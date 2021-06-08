@@ -1,3 +1,5 @@
 - hosts: workstations
   roles:
-    - hearthminion.hearthminion.fortune
+    - role: hearthminion.hearthminion.fortune
+      tags:
+        - fortune
