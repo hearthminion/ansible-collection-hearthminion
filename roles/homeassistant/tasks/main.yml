@@ -75,7 +75,7 @@
 - name: "Install Nginx virtual host config file."
   ansible.builtin.template:
     src: "nginx-site.conf.j2"
-    dest: "/etc/nginx/sites-available/{{ item.name }}.conf"
+    dest: "/etc/nginx/sites-available/{{ inventory_hostname }}.conf"
     owner: root
     group: root
     mode: "0644"
@@ -93,8 +93,8 @@
 
 - name: "Enable nginx site."
   ansible.builtin.file:
-    src: "/etc/nginx/sites-available/{{ item.name }}.conf"
-    dest: "/etc/nginx/sites-enabled/{{ item.name }}.conf"
+    src: "/etc/nginx/sites-available/{{ inventory_hostname }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ inventory_hostname }}.conf"
     owner: root
     group: root
     state: "link"
@@ -109,6 +109,18 @@
   notify: reload nginx
   tags:
     - upgrade
+
+- name: "Install ssl snippets"
+  ansible.builtin.template:
+    src: "ssl-snippets.conf.j2"
+    dest: "/etc/nginx/snippets/{{ inventory_hostname }}.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  become: yes
+  notify: restart nginx
+  tags:
+    - nginx
 
 - name: "Ensure default site does not exist."
   ansible.builtin.file:
