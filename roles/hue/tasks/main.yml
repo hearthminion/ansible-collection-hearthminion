@@ -1,0 +1,32 @@
+---
+# tasks file for hue
+- name: "Initialize Hub."
+  include_tasks: "initialize.yml"
+  when:
+    - hearthminion_hue_username == "password"
+  tags:
+    - hue
+
+- name: "Configure Lights."
+  include_tasks: "lights.yml"
+  when:
+    - hearthminion_hue_lights is truthy
+  tags:
+    - hue
+
+- name: "Configure Groups."
+  include_tasks: "groups.yml"
+  when:
+    - hearthminion_hue_groups is truthy
+  tags:
+    - hue
+
+- name: "Configure Scenes."
+  include_tasks: "scenes.yml"
+  when:
+    - hearthminion_hue_scenes is truthy
+  tags:
+    - hue
+
+#- name: "Reboot Hubs."
+

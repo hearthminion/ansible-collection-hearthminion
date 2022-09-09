@@ -1,0 +1,107 @@
+---
+# defaults file for hue
+hearthminion_hue_username: "password"
+
+hearthminion_hue_lights: []
+hearthminion_hue_groups: []
+hearthminion_hue_scenes: []
+
+
+hearthminion_hue_scene_action_bright:
+  color_temperature:
+    mirek: 367
+  dimming:
+    brightness: 100
+  'on':
+    'on': true
+
+hearthminion_hue_scene_action_candle:
+  'on':
+    'on': true
+  dimming:
+    brightness: 26.77
+  effects:
+    effect: candle
+
+hearthminion_hue_scene_action_concentrate:
+  color_temperature:
+    mirek: 233
+  dimming:
+    brightness: 100
+  'on':
+    'on': true
+
+hearthminion_hue_scene_action_dimmed:
+  color_temperature:
+    mirek: 367
+  dimming:
+    brightness: 29.92
+  'on':
+    'on': true
+
+hearthminion_hue_scene_action_dim_green:
+  'on':
+    'on': true
+  dimming:
+    brightness: 25
+  color:
+    xy:
+      x: 0.23
+      y: 0.698
+
+hearthminion_hue_scene_action_dim_red:
+  'on':
+    'on': true
+  dimming:
+    brightness: 25
+  color:
+    xy:
+      x: 0.6915
+      y: 0.3083
+
+hearthminion_hue_scene_action_energize:
+  color_temperature:
+    mirek: 156
+  dimming:
+    brightness: 100
+  'on':
+    'on': true
+
+hearthminion_hue_scene_action_fire:
+  'on':
+    'on': true
+  dimming:
+    brightness: 84.25
+  effects:
+    effect: fire
+
+hearthminion_hue_scene_action_nightlight:
+  'on':
+    'on': true
+  dimming:
+    brightness: 0
+  color_temperature:
+    mirek: 500
+
+hearthminion_hue_scene_action_off:
+  'on':
+    'on': false
+
+hearthminion_hue_scene_action_read:
+  color_temperature:
+    mirek: 346
+  dimming:
+    brightness: 100
+  'on':
+    'on': true
+
+hearthminion_hue_scene_action_relax:
+  color_temperature:
+    mirek: 447
+  dimming:
+    brightness: 56.3
+  'on':
+    'on': true
+
+__body_info:
+  devicetype: "Ansible"

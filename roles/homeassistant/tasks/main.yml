@@ -44,8 +44,9 @@
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "{{ homeassistant_config_dir }}:/config"
+      - "/run/dbus:/run/dbus:ro"
     detach: yes
-    init: yes
+    init: no
     container_default_behavior: no_defaults
     auto_remove: no
     interactive: no

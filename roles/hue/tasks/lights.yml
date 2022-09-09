@@ -1,0 +1,34 @@
+---
+- name: "Add Hue Lights."
+  ansible.builtin.uri:
+    url: "https://{{ inventory_hostname }}/clip/v2/resource/light"
+    method: PUT
+    headers:
+      hue-application-key: "{{ hearthminion_hue_username }}"
+    body: "{{ item.light_definition | to_json }}"
+    validate_certs: false
+    body_format: json
+  loop: "{{ hearthminion_hue_lights }}"
+  delegate_to: localhost
+  become: no
+  when:
+    - hearthminion_hue_scenes is truthy
+    - item.light_definition is defined
+    - item.id is not defined
+
+- name: "Update Hue Lights."
+  ansible.builtin.uri:
+    url: "https://{{ inventory_hostname }}/clip/v2/resource/light/{{ item.id }}"
+    method: PUT
+    headers:
+      hue-application-key: "{{ hearthminion_hue_username }}"
+    body: "{{ item.light_definition | to_json }}"
+    validate_certs: false
+    body_format: json
+  loop: "{{ hearthminion_hue_lights }}"
+  when:
+    - hearthminion_hue_scenes is truthy
+    - item.light_definition is defined
+    - item.id is defined
+  delegate_to: localhost
+  become: no

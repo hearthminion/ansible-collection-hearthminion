@@ -1,0 +1,6 @@
+- hosts: hue_hubs
+  gather_facts: false
+  roles:
+    - role: hearthminion.hearthminion.hue
+      tags:
+        - hue

@@ -1,0 +1,35 @@
+---
+- name: "Create Hue Scenes."
+  ansible.builtin.uri:
+    url: "https://{{ inventory_hostname }}/clip/v2/resource/scene"
+    method: PUT
+    headers:
+      hue-application-key: "{{ hearthminion_hue_username }}"
+    body: "{{ item.scene_definition | to_json }}"
+    validate_certs: false
+    body_format: json
+  loop: "{{ hearthminion_hue_scenes }}"
+  delegate_to: localhost
+  become: no
+  when:
+    - hearthminion_hue_scenes is truthy
+    - item.scene_definition is defined
+    - item.id is not defined
+
+- name: "Update Hue Scenes."
+  ansible.builtin.uri:
+    url: "https://{{ inventory_hostname }}/clip/v2/resource/scene/{{ item.id }}"
+    method: PUT
+    headers:
+      hue-application-key: "{{ hearthminion_hue_username }}"
+    body: "{{ item.scene_definition | to_json }}"
+    validate_certs: false
+    body_format: json
+  loop: "{{ hearthminion_hue_scenes }}"
+  when:
+    - hearthminion_hue_scenes is truthy
+    - item.scene_definition is defined
+    - item.id is defined
+    - item.scene_definition['metadata']['name'] != "HomeAssistant"
+  delegate_to: localhost
+  become: no
