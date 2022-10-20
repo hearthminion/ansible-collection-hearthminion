@@ -1,0 +1,30 @@
+---
+# tasks file for minidlna
+- name: Include OS-specific variables.
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files: "{{ __os_variables_files }}"
+      paths:
+        - "vars"
+  become: no
+
+- name: "Install packages."
+  ansible.builtin.package:
+    name: "{{ hearthminion_minidlna_packages }}"
+    state: present
+  become: yes
+  notify:
+    - "enable minidlna"
+    - "restart minidlna"
+
+- name: "configuration files"
+  ansible.builtin.template:
+    src: "{{ item.name }}.j2"
+    dest: "/{{ item.name }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ hearthminion_minidlna_config_files }}"
+  become: yes
+  notify: restart minidlna

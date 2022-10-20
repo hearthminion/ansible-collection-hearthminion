@@ -1,0 +1,5 @@
+- hosts: minidlna_servers
+  roles:
+    - role: hearthminion.hearthminion.minidlna
+      tags:
+        - minidlna

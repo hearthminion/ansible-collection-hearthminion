@@ -1,0 +1,50 @@
+---
+# handlers file for collection_handlers
+# ==================================================================================================
+#
+# Enable Handlers
+#
+# ==================================================================================================
+- name: "Enable Minidlna."
+  ansible.builtin.service:
+    name: minidlna
+    enabled: yes
+    state: enabled
+  become: yes
+  listen:
+    - "enable minidlna"
+  when:
+    - inventory_hostname in groups['minidlna_servers'] | default([])
+
+# ==================================================================================================
+#
+# Restart Service Handlers
+#
+# ==================================================================================================
+- name: "Restart Minidlna."
+  ansible.builtin.service:
+    name: minidlna
+    state: restarted
+  become: yes
+  listen:
+    - "restart all"
+    - "restart minidlna"
+  when:
+    - inventory_hostname in groups['minidlna_servers'] | default([])
+
+
+# ==================================================================================================
+#
+# Start Handlers
+#
+# ==================================================================================================
+- name: "Start Minidlna."
+  ansible.builtin.service:
+    name: minidlna
+    state: started
+  become: yes
+  listen:
+    - "start minidlna"
+  when:
+    - inventory_hostname in groups['minidlna_servers'] | default([])
+

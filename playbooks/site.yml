@@ -2,3 +2,4 @@
 - import_playbook: homeassistant.yml
 - import_playbook: hue.yml
 - import_playbook: mythtv.yml
+- import_playbook: minidlna.yml
