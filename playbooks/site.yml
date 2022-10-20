@@ -1,4 +1,4 @@
 - import_playbook: games.yml
-- ipmort_playbook: homeassistant.yml
+- import_playbook: homeassistant.yml
 - import_playbook: hue.yml
 - import_playbook: mythtv.yml
