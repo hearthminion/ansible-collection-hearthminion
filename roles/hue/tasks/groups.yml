@@ -1,35 +1,36 @@
 ---
 - name: "Create Hue Groups."
   ansible.builtin.uri:
-    url: "https://{{ inventory_hostname }}/clip/v2/resource/group"
-    method: PUT
+    url: "https://{{ ansible_host }}/clip/v2/resource/{{ item['group_definiton']['type'] | lower }}"
+    method: POST
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
-    body: "{{ item.group_definition | to_json }}"
+    body: "{{ item['group_definiton'] | to_json }}"
+    ca_path: "hue.crt"
     validate_certs: false
     body_format: json
   loop: "{{ hearthminion_hue_groups }}"
   delegate_to: localhost
   become: no
   when:
-    - hearthminion_hue_scenes is truthy
-    - item.scene_definition is defined
-    - item.id is not defined
+    - hearthminion_hue_groups is truthy
+    - item['group_definiton'] is defined
+    - item['id'] is not defined
 
 - name: "Update Hue Groups."
   ansible.builtin.uri:
-    url: "https://{{ inventory_hostname }}/clip/v2/resource/group/{{ item.id }}"
+    url: "https://{{ ansible_host }}/clip/v2/resource/{{ item['group_definiton']['type'] | lower }}/{{ item['id'] }}"
     method: PUT
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
-    body: "{{ item.group_definition | to_json }}"
+    body: "{{ item['group_definiton'] | to_json }}"
+    ca_path: "hue.crt"
     validate_certs: false
     body_format: json
-  loop: "{{ hearthminion_hue_scenes }}"
+  loop: "{{ hearthminion_hue_groups }}"
   when:
-    - hearthminion_hue_scenes is truthy
-    - item.scene_definition is defined
-    - item.id is defined
-    - item.scene_definition['metadata']['name'] != "HomeAssistant"
+    - hearthminion_hue_groups is truthy
+    - item['group_definiton'] is defined
+    - item['id'] is defined
   delegate_to: localhost
   become: no

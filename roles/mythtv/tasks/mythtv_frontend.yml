@@ -1,0 +1,28 @@
+---
+- name: "Install packages"
+  ansible.builtin.package:
+    name: "{{ hearthminion_mythtv_packages + hearthminion_mythtv_frontend_packages }}"
+    state: present
+  become: yes
+  tags:
+    - mythtv_frontend
+    - mythtv-frontend
+    - install-packages
+
+# ==================================================================================================
+#
+# Next steps:
+# - Ensure user is part of "video" group
+# - Is it possible to configure mythtv via cli and mysql inserts?
+# - Create user defaultmenu directory
+# - Install user default menu with streaming options
+#
+# ==================================================================================================
+- name: "Create defaultmenu directory"
+  ansible.builtin.file:
+    path: "/home/{{ hearthminion_mythtv_system_user }}/.mythtv/themes/defaultmenu"
+    state: directory
+    owner: "{{ hearthminion_mythtv_system_user }}"
+    group: "{{ hearthminion_mythtv_system_user }}"
+    mode: "0755"
+  become: yes

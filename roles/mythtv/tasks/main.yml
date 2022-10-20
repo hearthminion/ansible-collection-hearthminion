@@ -23,36 +23,28 @@
         - mythtv-backend-debug
         - install-packages
 
-    - name: "Install packages"
-      ansible.builtin.package:
-        name: "{{ packages }}"
-        state: present
-      become: yes
-      tags:
-        - mythtv_backend
-        - mythtv-backend
-        - mythtv_backend_debug
-        - mythtv-backend-debug
-        - install-packages
+- name: "Include MythTV Backend Tasks."
+  include_tasks: mythtv_backend.yml
+  when:
+    - inventory_hostname in groups['mythtv_backend']
+
+- name: "Include MythTV Frontend Tasks."
+  include_tasks: mythtv_frontend.yml
+  when:
+    - inventory_hostname in groups['mythtv_frontend']
 
 - name: "Ensure we have a password for the mythtv database user"
   ansible.builtin.set_fact:
     mythtv_db_password: "{{ lookup('community.general.passwordstore', __password_lookup) }}"
   vars:
-    __password_store_id: "{{ hearthminion_domain }}/services/mysql/{{ mythtv_db_user }}"
+    __password_store_id: "{{ hearthminion_passdb }}/{{ hearthminion_domain }}/services/mysql/{{ hearthminion_mythtv_db_user }}"
     __password_length: "length={{ hearthminion_password_length }}"
     __password_overwrite: "overwrite={{ hearthminion_overwrite_password }} backup=yes"
     __password_create: "create=true"
     __password_symbols: "nosymbols=true"
     __password_lookup: "{{ __password_store_id }} {{ __password_create }} {{ __password_length }} {{ __password_symbols }} {{ __password_overwrite }}"
-  delegate_to: localhost
   when:
-    - mythtv_db_password == "password"
-  tags:
-    - mythtv_backend
-    - mythtv-backend
-    - mythtv_backend_debug
-    - mythtv-backend-debug
+    - hearthminion_mythtv_db_password == "password"
 
 - name: "Install config file"
   ansible.builtin.template:
@@ -65,13 +57,10 @@
   tags:
         - mythtv_backend
         - mythtv-backend
-        - mythtv_backend_debug
-        - mythtv-backend-debug
+        - mythtv-frontend
+        - mythtv_frontend
+        - mythtv
 
-# ==================================================================================================
-#
-# Next steps:
-# - Ensure user is part of "video" group
-# - Is it possible to configure mythtv via cli and mysql inserts?
-#
-# ==================================================================================================
+- name: "Update MythTV Database."
+  include_tasks: mythtv_database.yml
+  

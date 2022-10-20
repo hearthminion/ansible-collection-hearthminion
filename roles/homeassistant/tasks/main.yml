@@ -19,7 +19,7 @@
 
 - name: "Install packages"
   ansible.builtin.package:
-    name: "{{ hearthminion_packages }}"
+    name: "{{ hearthminion_homeassistant_packages }}"
     state: present
   become: yes
   tags:
@@ -35,6 +35,28 @@
     - upgrade
     - upgrade-homeassistant
 
+# ==================================================================================================
+#
+# These next two task will restore home assistant's configuration from git repos.
+#
+# ==================================================================================================
+- name: "Download configuration from git repo."
+  ansible.builtin.git:
+    repo: "{{ hearthminion_homeassistant_config_git_url }}"
+    dest: "{{ hearthminion_homeassistant_config_dir }}"
+    force: false
+    update: true
+  when:
+    - hearthminion_homeassistant_config_git_url is truthy
+
+- name: "Download storage from git repo."
+  ansible.builtin.git:
+    repo: "{{ hearthminion_homeassistant_storage_git_url }}"
+    dest: "{{ hearthminion_homeassistant_config_dir }}/.storage"
+    update: false
+  when:
+    - hearthminion_homeassistant_config_git_url is truthy
+
 - name: "Install Home Assistant Docker Container."
   community.docker.docker_container:
     name: "homeassistant"
@@ -43,7 +65,7 @@
     network_mode: host
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - "{{ homeassistant_config_dir }}:/config"
+      - "{{ hearthminion_homeassistant_config_dir }}:/config"
       - "/run/dbus:/run/dbus:ro"
     detach: yes
     init: no
@@ -61,6 +83,39 @@
     - upgrade
 
 # ==================================================================================================
+#
+# Create yaml files for Home Assistant Configuration.
+#
+# ==================================================================================================
+- name: "Get secretes."
+  ansible.builtin.set_fact:
+    __ha_secrets: "{{ __ha_secrets + __secrets }}"
+  loop: "{{ hearthminion_homeassistant_secrets }}"
+  vars:
+    __secrets:
+      - name: "{{ item }}"
+        secret: "{{ __password }}"
+    __password_store_id: "{{ autonomy_passdb }}/{{ autonomy_domain }}/services/homeassistant/{{ item }}"
+    __password_create: "create=false"
+    __password_lookup: "{{ __password_store_id }} {{ __password_create }}"
+    __password: "{{ lookup('community.general.passwordstore', __password_lookup) }}"
+  tags:
+    - upgrade
+
+- name: "Create config files"
+  ansible.builtin.template:
+    src: "{{ item.name }}.yml.j2"
+    dest: "{{ hearthminion_homeassistant_config_dir }}/{{ item.name }}.yaml"
+    owner: "{{ hearthminion_homeassistant_owner }}"
+    group: "{{ hearthminion_homeassistant_group }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ hearthminion_homeassistant_config_files }}"
+  tags:
+    - upgrade
+
+# ==================================================================================================
+#
+# This next set of tasks configures Nginx to provide https capabilities.
 #
 # This needs another way of checking and disabling.
 #
@@ -143,11 +198,12 @@
 #       not valid, email <user> <log output from check> to inform the user instead of rebooting
 #
 # ==================================================================================================
-# - name: "Create cron to reboot system daily at 4 AM."
-#   cron:
-#     name: "Reboot System"
-#     minute: "0"
-#     hour: "4"
-#     job: "/sbin/reboot"
-#   become: yes
-#   tags:
+- name: "Create cron to reboot system daily at 4 AM."
+  cron:
+    name: "Reboot System"
+    minute: "0"
+    hour: "4"
+    job: "/sbin/reboot"
+  become: yes
+  tags:
+    - upgrade

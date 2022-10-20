@@ -4,7 +4,7 @@
 
 systemctl stop --user xscreensaver
 
-google-chrome --user-data-dir={{ mythtv_chrome_user_data_dir }} \
+google-chrome --user-data-dir={{ hearthminion_mythtv_chrome_user_data_dir }} \
 {% if item.app is defined %}
   --app={{ item.app }} \
 {% endif %}

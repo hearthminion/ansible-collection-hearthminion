@@ -14,12 +14,69 @@
   tags:
     - hue
 
+- name: "Get hue light definitions."
+  ansible.builtin.uri:
+    url: "https://{{ ansible_host }}/clip/v2/resource/light"
+    method: GET
+    dest: "~/hue_hubs/{{ hearthminion_hue_hub_id }}_lights.json"
+    mode: "0644"
+    headers:
+      hue-application-key: "{{ hearthminion_hue_username }}"
+    ca_path: "hue.crt"
+    validate_certs: false
+    body_format: json
+  delegate_to: localhost
+  become: no
+  when:
+    - hearthminion_hue_hub_id is defined
+    - hearthminion_hue_username is defined
+  tags:
+    - get-info
+
 - name: "Configure Groups."
   include_tasks: "groups.yml"
   when:
     - hearthminion_hue_groups is truthy
   tags:
     - hue
+
+- name: "Get hue room definitions."
+  ansible.builtin.uri:
+    url: "https://{{ ansible_host }}/clip/v2/resource/room"
+    method: GET
+    dest: "~/hue_hubs/{{ hearthminion_hue_hub_id }}_rooms.json"
+    mode: "0644"
+    headers:
+      hue-application-key: "{{ hearthminion_hue_username }}"
+    ca_path: "hue.crt"
+    validate_certs: false
+    body_format: json
+  delegate_to: localhost
+  become: no
+  when:
+    - hearthminion_hue_hub_id is defined
+    - hearthminion_hue_username is defined
+  tags:
+    - get-info
+
+- name: "Get hue zone definitions."
+  ansible.builtin.uri:
+    url: "https://{{ ansible_host }}/clip/v2/resource/zone"
+    method: GET
+    dest: "~/hue_hubs/{{ hearthminion_hue_hub_id }}_zones.json"
+    mode: "0644"
+    headers:
+      hue-application-key: "{{ hearthminion_hue_username }}"
+    ca_path: "hue.crt"
+    validate_certs: false
+    body_format: json
+  delegate_to: localhost
+  become: no
+  when:
+    - hearthminion_hue_hub_id is defined
+    - hearthminion_hue_username is defined
+  tags:
+    - get-info
 
 - name: "Configure Scenes."
   include_tasks: "scenes.yml"
@@ -28,5 +85,53 @@
   tags:
     - hue
 
-#- name: "Reboot Hubs."
+- name: "Get hue scene definitions."
+  ansible.builtin.uri:
+    url: "https://{{ ansible_host }}/clip/v2/resource/scene"
+    method: GET
+    dest: "~/hue_hubs/{{ hearthminion_hue_hub_id }}_scenes.json"
+    mode: "0644"
+    headers:
+      hue-application-key: "{{ hearthminion_hue_username }}"
+    ca_path: "hue.crt"
+    validate_certs: false
+    body_format: json
+  delegate_to: localhost
+  become: no
+  when:
+    - hearthminion_hue_hub_id is defined
+    - hearthminion_hue_username is defined
+  tags:
+    - get-info
 
+# - name: "Get hue rule definitions."
+#   ansible.builtin.uri:
+#     url: "https://{{ ansible_host }}/api/{{ hearthminion_hue_username }}/rules"
+#     method: GET
+#     dest: "~/hue_hubs/{{ hearthminion_hue_hub_id }}_rules.json"
+#     validate_certs: false
+#     body_format: json
+#   loop: "{{ hearthminion_hue_lights }}"
+#   delegate_to: localhost
+#   become: no
+#   when:
+#     - hearthminion_hue_lights is truthy
+#     - item.serial_number is defined
+#     - item.serial_number is truthy
+#     - item.id is not defined
+
+#- name: "Reboot Hubs."
+#   ansible.builtin.uri:
+#     url: "https://{{ ansible_host }}/api/{{ hearthminion_hue_username }}/rules"
+#     method: GET
+#     dest: "~/{{ hearthminion_hue_hub_id }}_rules.json"
+#     validate_certs: false
+#     body_format: json
+#   loop: "{{ hearthminion_hue_lights }}"
+#   delegate_to: localhost
+#   become: no
+#   when:
+#     - hearthminion_hue_lights is truthy
+#     - item.serial_number is defined
+#     - item.serial_number is truthy
+#     - item.id is not defined

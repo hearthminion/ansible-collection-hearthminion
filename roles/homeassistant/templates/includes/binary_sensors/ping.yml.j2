@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+
+{% for host in groups['all'] -%}
+  - platform: ping
+  host: {{ host }}
+  count: {{ hearthminion_homeassistant_ping_count }}
+
+{% endfor %}

@@ -1,33 +1,39 @@
 ---
+# ==================================================================================================
+#
+# Use API v1 since API v2 does not allow adding lights by serial number.
+#
+# ==================================================================================================
 - name: "Add Hue Lights."
   ansible.builtin.uri:
-    url: "https://{{ inventory_hostname }}/clip/v2/resource/light"
-    method: PUT
-    headers:
-      hue-application-key: "{{ hearthminion_hue_username }}"
-    body: "{{ item.light_definition | to_json }}"
+    url: "https://{{ ansible_host }}/api/{{ hearthminion_hue_username }}/lights"
+    method: POST
+    body: "{{ item.serial_number | to_json }}"
+    ca_path: "hue.crt"
     validate_certs: false
     body_format: json
   loop: "{{ hearthminion_hue_lights }}"
   delegate_to: localhost
   become: no
   when:
-    - hearthminion_hue_scenes is truthy
-    - item.light_definition is defined
+    - hearthminion_hue_lights is truthy
+    - item.serial_number is defined
+    - item.serial_number is truthy
     - item.id is not defined
 
 - name: "Update Hue Lights."
   ansible.builtin.uri:
-    url: "https://{{ inventory_hostname }}/clip/v2/resource/light/{{ item.id }}"
+    url: "https://{{ ansible_host }}/clip/v2/resource/light/{{ item.id }}"
     method: PUT
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
     body: "{{ item.light_definition | to_json }}"
+    ca_path: "hue.crt"
     validate_certs: false
     body_format: json
   loop: "{{ hearthminion_hue_lights }}"
   when:
-    - hearthminion_hue_scenes is truthy
+    - hearthminion_hue_lights is truthy
     - item.light_definition is defined
     - item.id is defined
   delegate_to: localhost

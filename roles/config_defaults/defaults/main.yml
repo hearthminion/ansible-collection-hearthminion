@@ -2,6 +2,19 @@
 # defaults file for config_defaults
 hearthminion_hostname: "{{ ansible_hostname_short }}"
 hearthminion_fqdn: "{{ ansible_fqdn }}"
+hearthminion_passdb: "ansible"
+
+hearthminion_ownca_certificate_file: "/etc/ssl/certs/{{ inventory_hostname }}.pem"
+hearthminion_ownca_certificate_key_file: "/etc/ssl/private/{{ inventory_hostname }}.key"
+
+# MythTV
+hearthminion_mythtv_base_dir: "/var/lib/mythtv"
+hearthminion_mythtv_video_dir: "{{ hearthminion_mythtv_base_dir }}/videos"
+
+# Minidlna
+hearthminion_minidlna_base_dir: "/var/lib/minidla"
+hearthminion_minidlna_video_dir: "{{ hearthminion_minidlna_base_dir }}/Videos"
+hearthminion_minidlna_music_dir: "{{ hearthminion_minidlna_base_dir }}/Music"
 
 # ==================================================================================================
 #

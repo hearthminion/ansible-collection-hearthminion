@@ -1,11 +1,12 @@
 ---
 - name: "Create Hue Scenes."
   ansible.builtin.uri:
-    url: "https://{{ inventory_hostname }}/clip/v2/resource/scene"
-    method: PUT
+    url: "https://{{ ansible_host }}/clip/v2/resource/scene"
+    method: POST
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
-    body: "{{ item.scene_definition | to_json }}"
+    body: "{{ item['scene_definition'] | to_json }}"
+    ca_path: "hue.crt"
     validate_certs: false
     body_format: json
   loop: "{{ hearthminion_hue_scenes }}"
@@ -13,23 +14,29 @@
   become: no
   when:
     - hearthminion_hue_scenes is truthy
-    - item.scene_definition is defined
-    - item.id is not defined
+    - item['scene_definition'] is defined
+    - item['scene_definition']['group']['rid'] is truthy
+    - item['id'] is not defined
 
 - name: "Update Hue Scenes."
   ansible.builtin.uri:
-    url: "https://{{ inventory_hostname }}/clip/v2/resource/scene/{{ item.id }}"
+    url: "https://{{ ansible_host }}/clip/v2/resource/scene/{{ item['id'] }}"
     method: PUT
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
-    body: "{{ item.scene_definition | to_json }}"
+    body: "{{ __scene | to_json }}"
+    ca_path: "hue.crt"
     validate_certs: false
     body_format: json
   loop: "{{ hearthminion_hue_scenes }}"
+  vars:
+    __scene: "{{ item['scene_definition'] | dict2items | rejectattr('key', 'search', 'group') | items2dict }}"
   when:
     - hearthminion_hue_scenes is truthy
-    - item.scene_definition is defined
-    - item.id is defined
-    - item.scene_definition['metadata']['name'] != "HomeAssistant"
+    - item['scene_definition'] is defined
+    - item['scene_definition']['metadata']['image'] is not defined
+    - item['scene_definition']['actions'] is defined
+    - item['id'] is defined
+    - item['scene_definition']['metadata']['name'] != "HomeAssistant"
   delegate_to: localhost
   become: no

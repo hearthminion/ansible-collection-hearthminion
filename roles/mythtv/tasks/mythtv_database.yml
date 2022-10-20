@@ -1,0 +1,3 @@
+- name: "Add video categories."
+  community.mysql.mysql_query:
+    login_db:

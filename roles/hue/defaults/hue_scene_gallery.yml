@@ -1,0 +1,515 @@
+---
+# ==================================================================================================
+#
+# Refreshing Scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_blossom_metadata:
+  name: "Blossom"
+  image:
+    rid: "a8897dcb-5c90-4459-8e4a-02b984bd32b5"
+    rtype: "public_image"
+
+hearthminion_hue_scene_crocus_metadata:
+  name: "Crocus"
+  image:
+    rid: "07591cf1-2594-4d6e-ae07-a032bc101ccc"
+    rtype: "public_image"
+
+hearthminion_hue_scene_precious_metadata:
+  name: "Precious"
+  image:
+    rid: "7f9638b1-1efc-4acc-8440-6bd70b0cf3f4"
+    rtype: "public_image"
+
+hearthminion_hue_scene_narcissa_metadata:
+  name: "Narcissa"
+  image:
+    rid: "c550452e-efe8-4151-b57a-0cb77296b823"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Cozy Scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_honolulu_metadata:
+  name: "Honolulu"
+  image:
+    rid: "d271d202-6856-4633-95ae-953ba73aee64"
+    rtype: "public_image"
+
+hearthminion_hue_scene_savanna_sunset_metadata:
+  name: "Savanna sunset"
+  image:
+    rid: "4f2ed241-5aea-4c9d-8028-55d2b111e06f"
+    rtype: "public_image"
+
+hearthminion_hue_scene_golden_pond_metadata:
+  name: "Golden pond"
+  image:
+    rid: "93984a4f-2d1b-4554-b972-b60fa8e476c5"
+    rtype: "public_image"
+
+hearthminion_hue_scene_ruby_glow_metadata:
+  name: "Ruby glow"
+  image:
+    rid: "edd77f6a-0198-44ac-b7c0-465dbd3d8707"
+    rtype: "public_image"
+
+hearthminion_hue_scene_tropical_twilight_metadata:
+  name: "Tropical twilight"
+  image:
+    rid: "a6a03e6a-fe6e-45bc-b686-878137f3ba91"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Party Scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_miami_metadata:
+  name: "Miami"
+  image:
+    rid: "b037f15f-f7e4-46ab-b624-45ba2886c127"
+    rtype: "public_image"
+
+hearthminion_hue_scene_cancun_metadata:
+  name: "Cancun"
+  image:
+    rid: "dba71ef7-789b-41b0-b6dd-c86fcbd56c04"
+    rtype: "public_image"
+
+hearthminion_hue_scene_rio_metadata:
+  name: "Rio"
+  image:
+    rid: "b17c7762-2619-4435-b931-313f17cc20e0"
+    rtype: "public_image"
+
+hearthminion_hue_scene_chinatown_metadata:
+  name: "Chinatown"
+  image:
+    rid: "63d50cd6-5909-4f7b-8810-137d08f57c54"
+    rtype: "public_image"
+
+hearthminion_hue_scene_ibiza_metadata:
+  name: "Ibiza"
+  image:
+    rid: "01e1d138-fc77-44e1-8012-c04fbae878e4"
+    rtype: "public_image"
+
+hearthminion_hue_scene_osaka_metadata:
+  name: "Osaka"
+  image:
+    rid: "87cb1e51-f823-42b1-86e5-697fc0c3d2ae"
+    rtype: "public_image"
+
+hearthminion_hue_scene_tokyo_metadata:
+  name: "Tokyo"
+  image:
+    rid: "60f088f5-4224-4f01-bcb1-81ef46099f63"
+    rtype: "public_image"
+
+hearthminion_hue_scene_motown_metadata:
+  name: "Motown"
+  image:
+    rid: "60de81e9-ffa6-485a-b7d1-e50c47912f18"
+    rtype: "public_image"
+
+hearthminion_hue_scene_fairfax_metadata:
+  name: "Fairfax"
+  image:
+    rid: "cc716363-44c2-4d64-88be-152d74072ea0"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Serenity Scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_galaxy_metadata:
+  name: "Galaxy"
+  image:
+    rid: "9e1d16f5-f391-4306-a6d3-d15bca61eb56"
+    rtype: "public_image"
+
+hearthminion_hue_scene_starlight_metadata:
+  name: "Starlight"
+  image:
+    rid: "d41d4a88-2019-48c6-84eb-a1080f2f7bd0"
+    rtype: "public_image"
+
+hearthminion_hue_scene_blood_moon_metadata:
+  name: "Blood moon"
+  image:
+    rid: "324509da-25d2-4d22-abab-e9091c0efb37"
+    rtype: "public_image"
+
+hearthminion_hue_scene_arctic_aurora_metadata:
+  name: "Arctic aurora"
+  image:
+    rid: "1e42b2e8-d02e-40d2-9c8d-b1fd8216c686"
+    rtype: "public_image"
+
+hearthminion_hue_scene_moonlight_metadata:
+  name: "Moonlight"
+  image:
+    rid: "ce78a7c5-3507-447e-a872-e367963817f0"
+    rtype: "public_image"
+
+hearthminion_hue_scene_nebula_metadata:
+  name: "Nebula"
+  image:
+    rid: "e6b53fe0-6b37-40bf-8c4e-f32afe95420f"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Romantic Scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_lovebirds_metadata:
+  name: "Lovebirds"
+  image:
+    rid: "1ed5d588-7a9d-46ce-8e4b-cb08e0a19f9c"
+    rtype: "public_image"
+
+hearthminion_hue_scene_smitten_metadata:
+  name: "Smitten"
+  image:
+    rid: "6c3599b0-3c2b-4019-b5bd-3e7e7764bceb"
+    rtype: "public_image"
+
+hearthminion_hue_scene_glitz_and_glam_metadata:
+  name: "Glitz and glam"
+  image:
+    rid: "df93ccf7-8928-41eb-af11-eefdcffbb06a"
+    rtype: "public_image"
+
+hearthminion_hue_scene_promise_metadata:
+  name: "Promise"
+  image:
+    rid: "f8db4e12-7406-4e05-ad6e-f09469ed7742"
+    rtype: "public_image"
+
+hearthminion_hue_scene_ruby_romance_metadata:
+  name: "Ruby romance"
+  image:
+    rid: "301b381a-6b3f-47a7-ae98-2bfbea0e030f"
+    rtype: "public_image"
+
+hearthminion_hue_scene_city_of_love_metadata:
+  name: "City of love"
+  image:
+    rid: "9f0913cf-c0e3-4b68-a97a-815e7cc501dc"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Dreamy scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_sundown_metadata:
+  name: "Sundown"
+  image:
+    rid: "a9038608-5e3e-4fde-8b31-2c03543445e3"
+    rtype: "public_image"
+
+hearthminion_hue_scene_blue_lagoon_metadata:
+  name: "Blue lagoon"
+  image:
+    rid: "68d526e2-6139-4855-bdb2-dd77acfdeba4"
+    rtype: "public_image"
+
+hearthminion_hue_scene_palm_beach_metadata:
+  name: "Palm beach"
+  image:
+    rid: "f44b43b1-b6d1-46e1-8c15-00d2b551b6fa"
+    rtype: "public_image"
+
+hearthminion_hue_scene_lake_placid_metadata:
+  name: "Lake Placid"
+  image:
+    rid: "b9b51b88-1570-4083-b8e4-bb02a981d2d2"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Peaceful scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_mountain_breeze_metadata:
+  name: "Mountain breeze"
+  image:
+    rid: "53742ab5-a15d-457d-84c4-0303acd25c81"
+    rtype: "public_image"
+
+hearthminion_hue_scene_lake_mist_metadata:
+  name: "Lake mist"
+  image:
+    rid: "b9deeedc-1f30-4152-90ba-e9c356f77871"
+    rtype: "public_image"
+
+hearthminion_hue_scene_ocean_dawn_metadata:
+  name: "Ocean dawn"
+  image:
+    rid: "747e2db1-d458-4c82-9b5c-c15f8273b90f"
+    rtype: "public_image"
+
+hearthminion_hue_scene_frosty_dawn_metadata:
+  name: "Frosty dawn"
+  image:
+    rid: "034d4ac9-a461-4b95-b59c-e2be9942ec28"
+    rtype: "public_image"
+
+hearthminion_hue_scene_sunday_morning_metadata:
+  name: "Sunday morning"
+  image:
+    rid: "3bc285d2-cb38-4d51-98dc-8da84a82f034"
+    rtype: "public_image"
+
+hearthminion_hue_scene_emerald_isle_metadata:
+  name: "Emerald isle"
+  image:
+    rid: "23a4eec3-f67e-4c82-8837-5ef31cf93838"
+    rtype: "public_image"
+
+hearthminion_hue_scene_spring_blossom_metadata:
+  name: "Spring blossom"
+  image:
+    rid: "adfa9c3e-e9aa-4b65-b9d3-c5b2c0576715"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Sunrise scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_beginnings_metadata:
+  name: "Beginnings"
+  image:
+    rid: "860350c2-f2dc-4c1c-8e1f-1ddb65001e1d"
+    rtype: "public_image"
+
+hearthminion_hue_scene_first_light_metadata:
+  name: "First light"
+  image:
+    rid: "ec790a2f-e63e-46cf-8a0f-1dd525e70f66"
+    rtype: "public_image"
+
+hearthminion_hue_scene_horizon_metadata:
+  name: "Horizon"
+  image:
+    rid: "8150ea42-9e7e-447d-a668-1e3d26a6fafb"
+    rtype: "public_image"
+
+hearthminion_hue_scene_valley_dawn_metadata:
+  name: "Valley dawn"
+  image:
+    rid: "e15e34e3-6c93-4914-a274-7e73ac0ad2a0"
+    rtype: "public_image"
+
+hearthminion_hue_scene_sunflare_metadata:
+  name: "Sunflare"
+  image:
+    rid: "51657196-e17c-47f6-8ed5-596237b152c8"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Luxurious scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_emerald_flutter_metadata:
+  name: "Emerald flutter"
+  image:
+    rid: "e3fb3dfd-f746-442d-8e17-43afcb542bfc"
+    rtype: "public_image"
+
+hearthminion_hue_scene_memento_metadata:
+  name: "Memento"
+  image:
+    rid: "9b4a6882-b2e5-4ce2-9235-75f93a3a70e2"
+    rtype: "public_image"
+
+hearthminion_hue_scene_resplendent_metadata:
+  name: "Resplendent"
+  image:
+    rid: "19ba4ece-0dfd-4ea6-9cd8-ba267e1dac98"
+    rtype: "public_image"
+
+hearthminion_hue_scene_scarlet_dream_metadata:
+  name: "Scarlet dream"
+  image:
+    rid: "548374ca-d7bc-4183-9383-faaff262160c"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Pure scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_midsummer_sun_metadata:
+  name: "Midsummer sun"
+  image:
+    rid: "a23f4a96-2c68-4655-acda-c29661f8b6ac"
+    rtype: "public_image"
+
+hearthminion_hue_scene_autumn_gold_metadata:
+  name: "Autumn gold"
+  image:
+    rid: "6799326d-e9cd-4b2a-9166-287509f841f3"
+    rtype: "public_image"
+
+hearthminion_hue_scene_spring_lake_metadata:
+  name: "Spring lake"
+  image:
+    rid: "f23b133f-7d9e-4edd-bf22-c2c4ba47b39d"
+    rtype: "public_image"
+
+hearthminion_hue_scene_winter_mountain_metadata:
+  name: "Winter mountain"
+  image:
+    rid: "ecbce974-7b1f-46da-a632-c57af04056f0"
+    rtype: "public_image"
+
+hearthminion_hue_scene_midwinter_metadata:
+  name: "Midwinter"
+  image:
+    rid: "284a13b9-af1e-4274-a099-0ce7ec00dfef"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Lush scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_amber_bloom_metadata:
+  name: "Amber bloom"
+  image:
+    rid: "10306e69-57ea-47a0-bd27-0efd001d0527"
+    rtype: "public_image"
+
+hearthminion_hue_scene_lily_metadata:
+  name: "Lily"
+  image:
+    rid: "94f0895c-b38f-400f-873e-a93ed16fae4d"
+    rtype: "public_image"
+
+hearthminion_hue_scene_painted_sky_metadata:
+  name: "Painted sky"
+  image:
+    rid: "001d8ffa-3ca9-4662-8658-5ed0af976d23"
+    rtype: "public_image"
+
+hearthminion_hue_scene_winter_beauty_metadata:
+  name: "Winter beauty"
+  image:
+    rid: "6e9492d8-035b-4f7c-b2b9-65973e7b3328"
+    rtype: "public_image"
+
+hearthminion_hue_scene_orange_fields_metadata:
+  name: "Orange fields"
+  image:
+    rid: "cb67acc8-7fbe-4458-949e-f1dd6d21fae4"
+    rtype: "public_image"
+
+hearthminion_hue_scene_forest_adventure_metadata:
+  name: "Forest adventure"
+  image:
+    rid: "3fd1c2af-25a6-4dda-8931-56864e501db0"
+    rtype: "public_image"
+
+hearthminion_hue_scene_blue_planet_metadata:
+  name: "Blue planet"
+  image:
+    rid: "db4ded6b-b552-4e0d-a1ea-2f23d8880c8c"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Futuristic scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_soho_metadata:
+  name: "Soho"
+  image:
+    rid: "e4ee61c3-ecdd-4005-b483-58207e693258"
+    rtype: "public_image"
+
+hearthminion_hue_scene_vapor_wave_metadata:
+  name: "Vapor wave"
+  image:
+    rid: "d8d1a014-5551-4ada-8da1-5a527d7bc09b"
+    rtype: "public_image"
+
+hearthminion_hue_scene_magneto_metadata:
+  name: "Magneto"
+  image:
+    rid: "05b493ae-d0ed-4b3c-8fea-3c1003e0aeb6"
+    rtype: "public_image"
+
+hearthminion_hue_scene_tyrell_metadata:
+  name: "tyrell"
+  image:
+    rid: "a8b531f3-2bec-4aa3-abb1-842418276799"
+    rtype: "public_image"
+
+hearthminion_hue_scene_disturbia_metadata:
+  name: "Disturbia"
+  image:
+    rid: "703662f8-cfdc-4486-bf96-dfba46f22583"
+    rtype: "public_image"
+
+hearthminion_hue_scene_hal_metadata:
+  name: "hal"
+  image:
+    rid: "10f1768a-5872-4b6f-bb6c-4d2db7bd2eae"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Holiday scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_golden_star_metadata:
+  name: "Golden star"
+  image:
+    rid: "93a6021b-955e-4fde-9d94-b77ec158106b"
+    rtype: "public_image"
+
+hearthminion_hue_scene_under_the_tree_metadata:
+  name: "Under the tree"
+  image:
+    rid: "2821554b-b5f7-4deb-8292-a95feb42280f"
+    rtype: "public_image"
+
+hearthminion_hue_scene_silent_night_metadata:
+  name: "Silent night"
+  image:
+    rid: "cb0f5370-c6af-414a-a0c1-e23be7136f01"
+    rtype: "public_image"
+
+hearthminion_hue_scene_rosy_sparkle_metadata:
+  name: "Rosy sparkle"
+  image:
+    rid: "39dccf09-09a1-4447-b6a9-2ce7167ae8a8"
+    rtype: "public_image"
+
+hearthminion_hue_scene_festive_fun_metadata:
+  name: "festive_fun"
+  image:
+    rid: "4580a393-f90a-45b6-a92c-b64f19b5e1b3"
+    rtype: "public_image"
+
+hearthminion_hue_scene_color_burst_metadata:
+  name: "Color burst"
+  image:
+    rid: "c8647d7d-ca53-4b0f-81f5-03eb6ba233f1"
+    rtype: "public_image"
+
+hearthminion_hue_scene_crystalline_metadata:
+  name: "Crystalline"
+  image:
+    rid: "40482fc3-1a6d-4d65-8aa9-60a8b6d93a5d"
+    rtype: "public_image"

@@ -6,40 +6,12 @@ hearthminion_hue_lights: []
 hearthminion_hue_groups: []
 hearthminion_hue_scenes: []
 
-
-hearthminion_hue_scene_action_bright:
-  color_temperature:
-    mirek: 367
-  dimming:
-    brightness: 100
-  'on':
-    'on': true
-
-hearthminion_hue_scene_action_candle:
-  'on':
-    'on': true
-  dimming:
-    brightness: 26.77
-  effects:
-    effect: candle
-
-hearthminion_hue_scene_action_concentrate:
-  color_temperature:
-    mirek: 233
-  dimming:
-    brightness: 100
-  'on':
-    'on': true
-
-hearthminion_hue_scene_action_dimmed:
-  color_temperature:
-    mirek: 367
-  dimming:
-    brightness: 29.92
-  'on':
-    'on': true
-
-hearthminion_hue_scene_action_dim_green:
+# ==================================================================================================
+#
+# Scene Definitions
+#
+# ==================================================================================================
+hearthminion_hue_scene_dim_green_action:
   'on':
     'on': true
   dimming:
@@ -49,7 +21,7 @@ hearthminion_hue_scene_action_dim_green:
       x: 0.23
       y: 0.698
 
-hearthminion_hue_scene_action_dim_red:
+hearthminion_hue_scene_dim_red_action:
   'on':
     'on': true
   dimming:
@@ -59,15 +31,30 @@ hearthminion_hue_scene_action_dim_red:
       x: 0.6915
       y: 0.3083
 
-hearthminion_hue_scene_action_energize:
-  color_temperature:
-    mirek: 156
-  dimming:
-    brightness: 100
+# This should be used when creating custom scenes on *individual* bulbs that you want to have off.
+hearthminion_hue_scene_action_off:
+  'on':
+    'on': false
+
+# ==================================================================================================
+#
+# Builtin Scene and metadata for effects
+#
+# These don't follow the pattern of the normal builtin scenes.
+#
+# ==================================================================================================
+hearthminion_hue_scene_candle_action:
   'on':
     'on': true
+  dimming:
+    brightness: 26.77
+  effects:
+    effect: candle
 
-hearthminion_hue_scene_action_fire:
+hearthminion_hue_scene_candle_metadata:
+  name: "Candle"
+
+hearthminion_hue_scene_fire_action:
   'on':
     'on': true
   dimming:
@@ -75,7 +62,111 @@ hearthminion_hue_scene_action_fire:
   effects:
     effect: fire
 
-hearthminion_hue_scene_action_nightlight:
+hearthminion_hue_scene_fire_metadata:
+  name: "Fireplace"
+
+# ==================================================================================================
+#
+# Builtin Scene Metadata (Required part of inventory definitions
+#
+# ==================================================================================================
+hearthminion_hue_scene_bright_metadata:
+  name: "Bright"
+  image:
+    rid: "732ff1d9-76a7-4630-aad0-c8acc499bb0b"
+    rtype: "public_image"
+
+hearthminion_hue_scene_concentrate_metadata:
+  name: "Concentrate"
+  image:
+    rid: "b90c8900-a6b7-422c-a5d3-e170187dbf8c"
+    rtype: "public_image"
+
+hearthminion_hue_scene_dimmed_metadata:
+  name: "Dimmed"
+  image:
+    rid: "8c74b9ba-6e89-4083-a2a7-b10a1e566fed"
+    rtype: "public_image"
+
+hearthminion_hue_scene_doze_metadata:
+  name: "Doze"
+  image:
+    rid: "11a09ad5-8d65-4e90-959b-f05981a9ab1b"
+    rtype: "public_image"
+
+
+hearthminion_hue_scene_energize_metadata:
+  name: "Energize"
+  image:
+    rid: "7fd2ccc5-5749-4142-b7a5-66405a676f03"
+    rtype: "public_image"
+
+hearthminion_hue_scene_nightlight_metadata:
+  name: "Nightlight"
+  image:
+    rid: "28bbfeff-1a0c-444e-bb4b-0b74b88e0c95"
+    rtype: "public_image"
+
+hearthminion_hue_scene_read_metadata:
+  name: "Read"
+  image:
+    rid: "e101a77f-9984-4f61-aac8-15741983c656"
+    rtype: "public_image"
+
+hearthminion_hue_scene_relax_metadata:
+  name: "Relax"
+  image:
+    rid: "a1f7da49-d181-4328-abea-68c9dc4b5416"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Builtin Scene Actions
+#
+# You should never need to 'use' these, but are available for if you 'want' to use them.
+#
+# ==================================================================================================
+hearthminion_hue_scene_bright_action:
+  color_temperature:
+    mirek: 367
+  dimming:
+    brightness: 100
+  'on':
+    'on': true
+
+hearthminion_hue_scene_concentrate_action:
+  color_temperature:
+    mirek: 233
+  dimming:
+    brightness: 100
+  'on':
+    'on': true
+
+hearthminion_hue_scene_dimmed_action:
+  color_temperature:
+    mirek: 367
+  dimming:
+    brightness: 29.92
+  'on':
+    'on': true
+
+hearthminion_hue_scene_doze_action:
+  color_temperature:
+    mirek: 500
+  dimming:
+    brightness: FIXME
+  'on':
+    'on': true
+
+hearthminion_hue_scene_energize_action:
+  color_temperature:
+    mirek: 156
+  dimming:
+    brightness: 100
+  'on':
+    'on': true
+
+hearthminion_hue_scene_nightlight_action:
   'on':
     'on': true
   dimming:
@@ -83,11 +174,7 @@ hearthminion_hue_scene_action_nightlight:
   color_temperature:
     mirek: 500
 
-hearthminion_hue_scene_action_off:
-  'on':
-    'on': false
-
-hearthminion_hue_scene_action_read:
+hearthminion_hue_scene_read_action:
   color_temperature:
     mirek: 346
   dimming:
@@ -95,7 +182,7 @@ hearthminion_hue_scene_action_read:
   'on':
     'on': true
 
-hearthminion_hue_scene_action_relax:
+hearthminion_hue_scene_relax_action:
   color_temperature:
     mirek: 447
   dimming:
@@ -103,5 +190,10 @@ hearthminion_hue_scene_action_relax:
   'on':
     'on': true
 
+# ==================================================================================================
+#
+# This is used only internally.  You do not need, nor necessarily want to edit the variables below.
+#
+# ==================================================================================================
 __body_info:
   devicetype: "Ansible"

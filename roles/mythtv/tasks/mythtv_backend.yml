@@ -1,0 +1,20 @@
+---
+- name: "Install packages"
+  ansible.builtin.package:
+    name: "{{ hearthminion_mythtv_packages + hearthminion_mythtv_backend_packages }}"
+    state: present
+  become: yes
+  tags:
+    - mythtv_backend
+    - mythtv-backend
+    - mythtv_backend_debug
+    - mythtv-backend-debug
+    - install-packages
+
+# ==================================================================================================
+#
+# Next steps:
+# - Ensure user is part of "video" group
+# - Is it possible to configure mythtv via cli and mysql inserts?
+#
+# ==================================================================================================

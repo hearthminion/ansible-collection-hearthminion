@@ -23,19 +23,6 @@
         state: present
       become: yes
 
-- name: "Ensure we have a password for the nextcloud ldap lookup user"
-  ansible.builtin.set_fact:
-    mythtv_db_password: "{{ lookup('community.general.passwordstore', __password_lookup) }}"
-  vars:
-    __password_store_id: "{{ hearthminion_domain }}/services/mysql/{{ mythtv_db_user }}"
-    __password_length: "length={{ hearthminion_password_length }}"
-    __password_overwrite: "overwrite={{ hearthminion_overwrite_password }} backup=yes"
-    __password_create: "create=true"
-    __password_symbols: "nosymbols=true"
-    __password_lookup: "{{ __password_store_id }} {{ __password_create }} {{ __password_length }} {{ __password_symbols }} {{ __password_overwrite }}"
-  delegate_to: localhost
-  when:
-    - mythtv_db_password == "password"
 
 - name: "Install config file"
   ansible.builtin.template:
@@ -44,23 +31,5 @@
     owner: "root"
     group: "root"
     mode: "0644"
-  become: yes
-
-# ==================================================================================================
-#
-# Next steps:
-# - Ensure user is part of "video" group
-# - Is it possible to configure mythtv via cli and mysql inserts?
-# - Create user defaultmenu directory
-# - Install user default menu with streaming options
-#
-# ==================================================================================================
-- name: "Create defaultmenu directory"
-  ansible.builtin.file:
-    path: "/home/{{ mythtv_system_user }}/.mythtv/themes/defaultmenu"
-    state: directory
-    owner: "{{ mythtv_system_user }}"
-    group: "{{ mythtv_system_user }}"
-    mode: "0755"
   become: yes
 
