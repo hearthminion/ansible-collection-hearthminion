@@ -1,0 +1,24 @@
+---
+# defaults file for minidlna
+hearthminion_minidlna_packages:
+  - minidlna
+
+hearthminion_minidlna_user: minidlna
+hearthminion_minidlna_group: "{{ hearthminion_minidlna_user }}"
+
+hearthminion_minidlna_config_files:
+  - name: "etc/minidlna.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  - name: "etc/default/minidlna"
+    owner: root
+    group: root
+    mode: "0644"
+
+hearthminion_minidlna_media_dirs:
+  - name: "/var/lib/minidlna"
+
+hearthminion_minidlna_network_interfaces: []
+hearthminion_minidlna_port: 8200
+hearthminion_minidlna_friendly_name: ""
