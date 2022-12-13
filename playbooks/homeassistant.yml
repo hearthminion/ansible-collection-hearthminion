@@ -8,8 +8,6 @@
 
 # - hosts: owntracks
 
-# - hosts: openzwave
-
 # - hosts: almond
 
 # - hosts: ada
