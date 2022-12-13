@@ -37,7 +37,10 @@
 
 # ==================================================================================================
 #
-# These next two task will restore home assistant's configuration from git repos.
+# TODO: Check if hearthminion_homeassistant_config_dir needs to be created first, or if it needs
+# to be created when there isn't a repo to download from.
+#
+# These next four tasks will restore home assistant's configuration from git repos.
 #
 # ==================================================================================================
 - name: "Download configuration from git repo."
@@ -55,38 +58,8 @@
     dest: "{{ hearthminion_homeassistant_config_dir }}/.storage"
     update: false
   when:
-    - hearthminion_homeassistant_config_git_url is truthy
+    - hearthminion_homeassistant_storage_git_url is truthy
 
-- name: "Install Home Assistant Docker Container."
-  community.docker.docker_container:
-    name: "homeassistant"
-    image: "homeassistant/raspberrypi3-homeassistant:stable"
-    restart_policy: unless-stopped
-    network_mode: host
-    volumes:
-      - "/etc/localtime:/etc/localtime:ro"
-      - "{{ hearthminion_homeassistant_config_dir }}:/config"
-      - "/run/dbus:/run/dbus:ro"
-    detach: yes
-    init: no
-    container_default_behavior: no_defaults
-    auto_remove: no
-    interactive: no
-    memory: "0"
-    paused: no
-    privileged: no
-    read_only: no
-    tty: no
-    pull: "{{ __homeassistant_upgrade }}"
-  become: yes
-  tags:
-    - upgrade
-
-# ==================================================================================================
-#
-# Create yaml files for Home Assistant Configuration.
-#
-# ==================================================================================================
 - name: "Get secretes."
   ansible.builtin.set_fact:
     __ha_secrets: "{{ __ha_secrets + __secrets }}"
@@ -110,6 +83,31 @@
     group: "{{ hearthminion_homeassistant_group }}"
     mode: "{{ item.mode }}"
   loop: "{{ hearthminion_homeassistant_config_files }}"
+  tags:
+    - upgrade
+
+- name: "Install Home Assistant Docker Container."
+  community.docker.docker_container:
+    name: "homeassistant"
+    image: "homeassistant/raspberrypi3-homeassistant:stable"
+    restart_policy: unless-stopped
+    network_mode: host
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "{{ hearthminion_homeassistant_config_dir }}:/config"
+      - "/run/dbus:/run/dbus:ro"
+    detach: yes
+    init: no
+    container_default_behavior: no_defaults
+    auto_remove: no
+    interactive: no
+    memory: "0"
+    paused: no
+    privileged: no
+    read_only: no
+    tty: no
+    pull: "{{ __homeassistant_upgrade }}"
+  become: yes
   tags:
     - upgrade
 
@@ -199,11 +197,17 @@
 #
 # ==================================================================================================
 - name: "Create cron to reboot system daily at 4 AM."
-  cron:
+  ansible.builtin.cron:
     name: "Reboot System"
-    minute: "0"
+    #month: "*"
+    #day: "*"
+    #weekday: "*"
     hour: "4"
+    minute: "0"
     job: "/sbin/reboot"
+    state: present
+    backup: false
+    disabled: "{{ hearthminion_homeassistant_autoreboot_disabled }}"
   become: yes
   tags:
     - upgrade
