@@ -104,34 +104,69 @@
   tags:
     - get-info
 
-# - name: "Get hue rule definitions."
-#   ansible.builtin.uri:
-#     url: "https://{{ ansible_host }}/api/{{ hearthminion_hue_username }}/rules"
-#     method: GET
-#     dest: "~/hue_hubs/{{ hearthminion_hue_hub_id }}_rules.json"
-#     validate_certs: false
-#     body_format: json
-#   loop: "{{ hearthminion_hue_lights }}"
-#   delegate_to: localhost
-#   become: no
-#   when:
-#     - hearthminion_hue_lights is truthy
-#     - item.serial_number is defined
-#     - item.serial_number is truthy
-#     - item.id is not defined
+# ==================================================================================================
+#
+# Rules have not yet been converted to API v2
+#
+# ==================================================================================================
+- name: "Get hue rule definitions."
+  ansible.builtin.uri:
+    url: "https://{{ ansible_host }}/api/{{ hearthminion_hue_username }}/rules"
+    method: GET
+    dest: "~/hue_hubs/{{ hearthminion_hue_hub_id }}_rules.json"
+    validate_certs: false
+    body_format: json
+  delegate_to: localhost
+  become: no
+  when:
+    - hearthminion_hue_hub_id is defined
+    - hearthminion_hue_username is defined
+  tags:
+    - get-info
 
+# ==================================================================================================
+#
+# Reboot Hubs
+#
+# After making many changes via API calls, I have found the hub tends to get sluggish until it is
+# rebooted.  Therefore, after running this playbook, we reboot the hub.
+#
+# FIXME: This doesn't actually work like it should.  While supposedly this is a valid command, the
+#        hue bridge doesn't seem to do anything with it.  The bridge doesn't reboot.  The bridge
+#        does not provide an error message.
+#
+# ==================================================================================================
 #- name: "Reboot Hubs."
 #   ansible.builtin.uri:
-#     url: "https://{{ ansible_host }}/api/{{ hearthminion_hue_username }}/rules"
-#     method: GET
-#     dest: "~/{{ hearthminion_hue_hub_id }}_rules.json"
+#     url: "https://{{ ansible_host }}/api/{{ hearthminion_hue_username }}/config"
+#     method: POST
 #     validate_certs: false
+#     body: "{{ json_data | to_json }}"
 #     body_format: json
-#   loop: "{{ hearthminion_hue_lights }}"
 #   delegate_to: localhost
 #   become: no
-#   when:
-#     - hearthminion_hue_lights is truthy
-#     - item.serial_number is defined
-#     - item.serial_number is truthy
-#     - item.id is not defined
+#   vars:
+#     json_data:
+#       reboot: "true"
+
+- name: "Update Home Assistant Hub IDs."
+  ansible.builtin.uri:
+    url: "http://{{ homeassistant_host }}/api/services/input_text/set_value"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ hearthminion_homeassistant_auth_token }}"
+      Content-type: "application/json"
+    body: "{{ json_data | to_json }}"
+    validate_certs: false
+    body_format: json
+  vars:
+    homeassistant_host: "{{ hearthminion_hue_ha_host | default(groups['homeassistant'][0]) }}:8123"
+    json_data:
+      entity_id: "{{ hearthminion_hue_ha_entity }}"
+      value: "{{ inventory_hostname }}"
+  when:
+    - hearthminion_hue_lights is truthy
+    - hearthminion_hue_ha_entity is defined
+    - groups['homeassistant'] is defined
+  delegate_to: localhost
+  become: no

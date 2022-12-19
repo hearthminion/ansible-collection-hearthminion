@@ -38,3 +38,29 @@
     - item.id is defined
   delegate_to: localhost
   become: no
+
+- name: "Update Home Assistant Light Entity IDs."
+  ansible.builtin.uri:
+    url: "http://{{ homeassistant_host }}/api/services/input_text/set_value"
+    method: POST
+    headers:
+      Authorization: "Bearer {{ hearthminion_homeassistant_auth_token }}"
+      Content-type: "application/json"
+    body: "{{ json_data | to_json }}"
+    validate_certs: false
+    body_format: json
+    status_code:
+      - 200
+      - 201
+  loop: "{{ hearthminion_hue_lights }}"
+  vars:
+    homeassistant_host: "{{ hearthminion_hue_ha_host | default(groups['homeassistant'][0]) }}:8123"
+    json_data:
+      entity_id: "{{ item.ha_entity }}"
+      value: "{{ item.id }}"
+  when:
+    - hearthminion_hue_lights is truthy
+    - item.ha_entity is defined
+    - groups['homeassistant'] is defined
+  delegate_to: localhost
+  become: no
