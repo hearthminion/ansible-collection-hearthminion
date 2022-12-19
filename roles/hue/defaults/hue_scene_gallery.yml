@@ -469,19 +469,37 @@ hearthminion_hue_scene_hal_metadata:
 
 # ==================================================================================================
 #
-# Holiday scenes
+# Winter Holidays scenes
 #
 # ==================================================================================================
-hearthminion_hue_scene_golden_star_metadata:
-  name: "Golden star"
+hearthminion_hue_scene_snow_sparkle_metadata:
+  name: "Snow sparkle"
   image:
-    rid: "93a6021b-955e-4fde-9d94-b77ec158106b"
+    rid: "6e6fe016-d9a8-4b87-81d2-696128e2c12d"
     rtype: "public_image"
 
 hearthminion_hue_scene_under_the_tree_metadata:
   name: "Under the tree"
   image:
     rid: "2821554b-b5f7-4deb-8292-a95feb42280f"
+    rtype: "public_image"
+
+hearthminion_hue_scene_nutcracker_metadata:
+  name: "Nutcracker"
+  image:
+    rid: "6787a536-1bc5-4eb7-8a4b-8d1553c5a7d2"
+    rtype: "public_image"
+
+hearthminion_hue_scene_jolly_metadata:
+  name: "Jolly"
+  image:
+    rid: "3cdb01fa-2ba9-4975-b64e-f46c914b8b9b"
+    rtype: "public_image"
+
+hearthminion_hue_scene_golden_star_metadata:
+  name: "Golden star"
+  image:
+    rid: "93a6021b-955e-4fde-9d94-b77ec158106b"
     rtype: "public_image"
 
 hearthminion_hue_scene_silent_night_metadata:
@@ -497,7 +515,7 @@ hearthminion_hue_scene_rosy_sparkle_metadata:
     rtype: "public_image"
 
 hearthminion_hue_scene_festive_fun_metadata:
-  name: "festive_fun"
+  name: "Festive fun"
   image:
     rid: "4580a393-f90a-45b6-a92c-b64f19b5e1b3"
     rtype: "public_image"
@@ -512,4 +530,45 @@ hearthminion_hue_scene_crystalline_metadata:
   name: "Crystalline"
   image:
     rid: "40482fc3-1a6d-4d65-8aa9-60a8b6d93a5d"
+    rtype: "public_image"
+
+# ==================================================================================================
+#
+# Halloween Scenes
+#
+# ==================================================================================================
+hearthminion_hue_scene_trick_or_treat_metadata:
+  name: "Trick or Treat"
+  image:
+    rid: "a93d1cb8-3ed3-444f-b727-e23936ab9e9d"
+    rtype: "public_image"
+
+hearthminion_hue_scene_glowing_grins_metadata:
+  name: "Glowing grins"
+  image:
+    rid: "b5f5a765-8f72-4aef-af99-90a116818ad4"
+    rtype: "public_image"
+
+hearthminion_hue_scene_spellbound_metadata:
+  name: "Spellbound"
+  image:
+    rid: "d864a3dc-3925-49e9-b9ea-4415c0836326"
+    rtype: "public_image"
+
+hearthminion_hue_scene_witching_hour_metadata:
+  name: "Witching hour"
+  image:
+    rid: "75457600-682c-437f-a83c-c411f3ec73e3"
+    rtype: "public_image"
+
+hearthminion_hue_scene_pandemonium_metadata:
+  name: "Pandemonium"
+  image:
+    rid: "a235fd77-25e7-450a-979a-42dbaee82a5d"
+    rtype: "public_image"
+
+hearthminion_hue_scene_phantom_metadata:
+  name: "Phantom"
+  image:
+    rid: "5debd7d7-8506-4617-9a3f-bf78f58b6572"
     rtype: "public_image"
