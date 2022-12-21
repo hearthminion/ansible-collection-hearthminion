@@ -6,6 +6,47 @@ hearthminion_hue_lights: []
 hearthminion_hue_groups: []
 hearthminion_hue_scenes: []
 
+hearthminion_hue_scene_homeassistant: "HomeAssistant"
+
+# ==================================================================================================
+#
+# Light Power On Behaviour
+#
+# ==================================================================================================
+# Preset (Must be one of):
+#   - safety
+#   - powerfail
+#   - last_on_state
+#   - custom
+hearthminion_hue_powerup_preset: "safety"
+
+# On (Must be one of):
+#   - on
+#   - toggle
+#   - previous
+hearthminion_hue_powerup_on:
+  mode: "on"
+
+# Dimming (Must be one of):
+#   - dimming
+#   - previous
+hearthminion_hue_powerup_dimming:
+  mode: "dimming"
+
+# Color( Must be one of):
+#  - color_temperature
+#  - color
+#  - previous
+hearthminion_hue_powerup_color:
+  mode: "color_temperature"
+
+# Complete
+hearthminion_hue_power_on_behavior:
+  preset: "{{ hearthminion_hue_powerup_preset }}"
+  on: "{{ hearthminion_hue_powerup_on }}"
+  dimming: "{{ hearthminion_hue_powerup_dimming }}"
+  color: "{{ hearthminion_hue_powerup_color }}"
+
 # ==================================================================================================
 #
 # Scene Definitions

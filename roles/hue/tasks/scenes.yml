@@ -9,6 +9,9 @@
     ca_path: "hue.crt"
     validate_certs: false
     body_format: json
+    status_code:
+      - 200
+      - 201
   loop: "{{ hearthminion_hue_scenes }}"
   delegate_to: localhost
   become: no
@@ -16,7 +19,7 @@
     - hearthminion_hue_scenes is truthy
     - item['scene_definition'] is defined
     - item['scene_definition']['group']['rid'] is truthy
-    - item['id'] is not defined
+    - (item['id'] is not defined or item['id'] is falsy)
 
 - name: "Update Hue Scenes."
   ansible.builtin.uri:
@@ -37,7 +40,8 @@
     - item['scene_definition']['metadata']['image'] is not defined
     - item['scene_definition']['actions'] is defined
     - item['id'] is defined
-    - item['scene_definition']['metadata']['name'] != "HomeAssistant"
+    - item['id'] is truthy
+    - item['scene_definition']['metadata']['name'] != hearthminion_hue_scene_homeassistant
   delegate_to: localhost
   become: no
 
@@ -54,14 +58,15 @@
     status_code:
       - 200
       - 201
-  loop: "{{ hearthminion_hue_lights }}"
+  loop: "{{ hearthminion_hue_scenes }}"
   vars:
     homeassistant_host: "{{ hearthminion_hue_ha_host | default(groups['homeassistant'][0]) }}:8123"
     json_data:
       entity_id: "{{ item.ha_entity }}"
       value: "{{ item.id }}"
   when:
-    - hearthminion_hue_lights is truthy
+    - hearthminion_hue_scenes is truthy
+    - item.id
     - item.ha_entity is defined
     - groups['homeassistant'] is defined
   delegate_to: localhost

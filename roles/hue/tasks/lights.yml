@@ -8,13 +8,16 @@
   ansible.builtin.uri:
     url: "https://{{ ansible_host }}/api/{{ hearthminion_hue_username }}/lights"
     method: POST
-    body: "{{ item.serial_number | to_json }}"
+    body: "{{ serial_number | to_json }}"
     ca_path: "hue.crt"
     validate_certs: false
     body_format: json
   loop: "{{ hearthminion_hue_lights }}"
   delegate_to: localhost
   become: no
+  vars:
+    serial_number:
+      deviceid: "{{ item.serial_number }}"
   when:
     - hearthminion_hue_lights is truthy
     - item.serial_number is defined
@@ -27,14 +30,18 @@
     method: PUT
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
-    body: "{{ item.light_definition | to_json }}"
+    body: "{{ light_definition | to_json }}"
     ca_path: "hue.crt"
     validate_certs: false
     body_format: json
   loop: "{{ hearthminion_hue_lights }}"
+  vars:
+    light_definition:
+      name: "{{ item.name }}"
+      # powerup: {{ hearthminion_hue_power_on_behavior }}"
   when:
     - hearthminion_hue_lights is truthy
-    - item.light_definition is defined
+    - item.name is defined
     - item.id is defined
   delegate_to: localhost
   become: no

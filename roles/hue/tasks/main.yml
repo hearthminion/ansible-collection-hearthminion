@@ -163,7 +163,7 @@
     homeassistant_host: "{{ hearthminion_hue_ha_host | default(groups['homeassistant'][0]) }}:8123"
     json_data:
       entity_id: "{{ hearthminion_hue_ha_entity }}"
-      value: "{{ inventory_hostname }}"
+      value: "{{ ansible_host }}"
   when:
     - hearthminion_hue_lights is truthy
     - hearthminion_hue_ha_entity is defined
