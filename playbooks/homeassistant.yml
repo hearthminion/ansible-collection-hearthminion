@@ -13,6 +13,10 @@
 # - hosts: ada
 
 # - hosts:
+- hosts: hue_hubs
+  gather_facts: false
+  roles:
+    - role: hearthminion.hearthminion.hue
 
 - hosts: homeassistant
   roles:
