@@ -5,6 +5,7 @@ hearthminion_fqdn: "{{ ansible_fqdn }}"
 hearthminion_passdb: "ansible"
 
 hearthminion_ownca_certificate_file: "/etc/ssl/certs/{{ inventory_hostname }}.pem"
+hearthminion_ownca_certificate_chain_file: "/etc/ssl/certs/{{ inventory_hostname }}-chain.pem"
 hearthminion_ownca_certificate_key_file: "/etc/ssl/private/{{ inventory_hostname }}.key"
 
 # MythTV

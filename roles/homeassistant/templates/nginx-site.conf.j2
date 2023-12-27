@@ -11,7 +11,7 @@ server {
   listen 443 ssl {% if homeassistant_nginx_default_server %}default_server{% endif %};
   listen [::]:443 ssl {% if homeassistant_nginx_default_server %}default_server{% endif %};
 
-  include snippets/{{ hearthminion_hostname }}.conf;
+  include snippets/{{ inventory_hostname }}.conf;
 
   root /var/www/html;
 
