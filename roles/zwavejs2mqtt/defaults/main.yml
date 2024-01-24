@@ -2,10 +2,10 @@
 # defaults file for zwavejs2mqtt
 hearthminion_packages: []
 
-zwavejs2mqtt_serial_dev: "/dev/ttyACM0"
+zwavejs2mqtt_serial_dev: "/dev/serial/by-id/usb-0658_0200-if00"
 zwavejs2mqtt_config_dir: "/srv/zwavejs2mqtt"
 zwavejs2mqtt_devices:
-  - "{{ zwavejs2mqtt_serial_dev }}"
+  - "{{ zwavejs2mqtt_serial_dev }}:/dev/zwave"
 
 zwavejs2mqtt_mqtt_enabled: no
 zwavejs2mqtt_ws_enabled: yes

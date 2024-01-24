@@ -11,7 +11,7 @@ hearthminion_homeassistant_config_dir: "/srv/homeassistant/config"
 
 hearthminion_homeassistant_owner: root
 hearthminion_homeassistant_group: root
-
+hearthminion_homeassistant_version: "stable"
 hearthminion_homeassistant_config_git_url: ""
 hearthminion_homeassistant_storage_git_url: ""
 

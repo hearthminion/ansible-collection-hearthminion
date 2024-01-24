@@ -6,16 +6,19 @@
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
     body: "{{ item['group_definiton'] | to_json }}"
-    ca_path: "hue.crt"
+    ca_path: "{{ role_path }}/files/hue.crt"
     validate_certs: false
     body_format: json
   loop: "{{ hearthminion_hue_groups }}"
+  become: false
   delegate_to: localhost
-  become: no
   when:
     - hearthminion_hue_groups is truthy
     - item['group_definiton'] is defined
     - item['id'] is not defined
+  tags:
+    - hue
+    - hue-groups
 
 - name: "Update Hue Groups."
   ansible.builtin.uri:
@@ -24,13 +27,16 @@
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
     body: "{{ item['group_definiton'] | to_json }}"
-    ca_path: "hue.crt"
+    ca_path: "{{ role_path }}/files/hue.crt"
     validate_certs: false
     body_format: json
   loop: "{{ hearthminion_hue_groups }}"
+  become: false
+  delegate_to: localhost
   when:
     - hearthminion_hue_groups is truthy
     - item['group_definiton'] is defined
     - item['id'] is defined
-  delegate_to: localhost
-  become: no
+  tags:
+    - hue
+    - hue-groups

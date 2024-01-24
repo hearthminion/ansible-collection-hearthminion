@@ -17,13 +17,13 @@
         - "vars"
   become: no
 
-- name: "Install packages"
+- name: "Install packages."
   ansible.builtin.package:
     name: "{{ packages }}"
     state: present
   become: yes
 
-- name: "Install additional fortunes"
+- name: "Install additional fortunes."
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ fortunes_dir }}/hearthminion-{{ item }}"

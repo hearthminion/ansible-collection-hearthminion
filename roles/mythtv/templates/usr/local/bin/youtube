@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#FULLSCREEN="--start-fullscreen"
+
+systemctl stop --user xscreensaver
+google-chrome --user-data-dir=/home/mythtv/.config/chrome-mythtv ${FULLSCREEN} https://youtube.com
+systemctl start --user xscreensaver

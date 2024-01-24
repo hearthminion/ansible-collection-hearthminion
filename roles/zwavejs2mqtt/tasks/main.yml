@@ -48,24 +48,25 @@
 - name: "Install zwavejs2mqtt Docker Container."
   community.docker.docker_container:
     name: "zwavejs2mqtt"
-    image: "zwavejs/zwavejs2mqtt:latest"
-    restart_policy: unless-stopped
-    network_mode: host
-    volumes:
-      - "{{ zwavejs2mqtt_config_dir }}:/usr/src/app/store"
-    exposed_ports: "{{ __zwavejs2mqtt_exposed_ports }}"
-    detach: yes
-    devices: "{{ zwavejs2mqtt_devices }}"
-    init: yes
-    container_default_behavior: no_defaults
-    auto_remove: no
-    interactive: no
-    memory: "0"
-    paused: no
-    privileged: no
-    read_only: no
-    tty: no
-    pull: "{{ __zwavejs2mqtt_upgrade }}"
+    # image: "zwavejs/zwave-js-ui:latest"
+    # restart_policy: unless-stopped
+    # network_mode: host
+    # volumes:
+    #   - "{{ zwavejs2mqtt_config_dir }}:/usr/src/app/store"
+    # exposed_ports: "{{ __zwavejs2mqtt_exposed_ports }}"
+    # detach: yes
+    # devices: "{{ zwavejs2mqtt_devices }}"
+    # init: yes
+    # container_default_behavior: no_defaults
+    # auto_remove: no
+    # interactive: no
+    # memory: "0"
+    # paused: no
+    # privileged: no
+    # read_only: no
+    # tty: true
+    # pull: "{{ __zwavejs2mqtt_upgrade }}"
+    state: absent
   become: yes
   tags:
     - upgrade

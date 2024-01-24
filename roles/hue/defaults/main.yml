@@ -1,6 +1,7 @@
 ---
 # defaults file for hue
 hearthminion_hue_username: "password"
+hearthminion_hue_json_dir: ""
 
 hearthminion_hue_lights: []
 hearthminion_hue_groups: []
@@ -106,9 +107,42 @@ hearthminion_hue_scene_fire_action:
 hearthminion_hue_scene_fire_metadata:
   name: "Fireplace"
 
+hearthminion_hue_scene_prism_action:
+  'on':
+    'on': true
+  dimming:
+    brightness: 100.0
+  effects:
+    effect: prism
+
+hearthminion_hue_scene_prism_metadata:
+  name: "Prism"
+
+hearthminion_hue_scene_glisten_action:
+  'on':
+    'on': true
+  dimming:
+    brightness: 100.0
+  effects:
+    effect: glisten
+
+hearthminion_hue_scene_glisten_metadata:
+  name: "Glisten"
+
+hearthminion_hue_scene_opal_action:
+  'on':
+    'on': true
+  dimming:
+    brightness: 100.0
+  effects:
+    effect: opal
+
+hearthminion_hue_scene_opal_metadata:
+  name: "Opal"
+
 # ==================================================================================================
 #
-# Builtin Scene Metadata (Required part of inventory definitions
+# Builtin Scene Metadata (Required part of inventory definitions)
 #
 # ==================================================================================================
 hearthminion_hue_scene_bright_metadata:
@@ -162,8 +196,6 @@ hearthminion_hue_scene_rest_metadata:
 # ==================================================================================================
 #
 # Builtin Scene Actions
-#
-# You should never need to 'use' these, but are available for if you 'want' to use them.
 #
 # ==================================================================================================
 hearthminion_hue_scene_bright_action:

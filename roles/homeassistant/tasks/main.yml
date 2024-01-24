@@ -89,7 +89,7 @@
 - name: "Install Home Assistant Docker Container."
   community.docker.docker_container:
     name: "homeassistant"
-    image: "homeassistant/raspberrypi3-homeassistant:stable"
+    image: "ghcr.io/home-assistant/home-assistant:{{ hearthminion_homeassistant_version }}"
     restart_policy: unless-stopped
     network_mode: host
     volumes:

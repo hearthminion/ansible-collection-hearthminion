@@ -6,22 +6,28 @@
 #  
 #
 # ======================================================================
-- name: "Pre-tasks"
-  block:
-    - name: Include OS-specific variables.
-      include_vars: "{{ lookup('first_found', params) }}"
-      vars:
-        params:
-          files: "{{ __os_variables_files }}"
-          paths:
-            - "vars"
-      become: no
-      tags:
-        - mythtv_backend
-        - mythtv-backend
-        - mythtv_backend_debug
-        - mythtv-backend-debug
-        - install-packages
+- name: Include OS-specific variables.
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files: "{{ __os_variables_files }}"
+      paths:
+        - "vars"
+  become: no
+  tags:
+    - mythtv_backend
+    - mythtv-backend
+    - mythtv_backend_debug
+    - mythtv-backend-debug
+    - install-packages
+
+# - name: "Add APT Repository for mythtv package."
+#   community.general.apt_repo:
+#     repo: "ppa:mythbuntu/{{ hearthminion_mythtv_version }}"
+#     state: present
+#     update: true
+#   when:
+#     - ansible_distribution == "Ubuntu"
 
 - name: "Include MythTV Backend Tasks."
   include_tasks: mythtv_backend.yml
@@ -35,7 +41,7 @@
 
 - name: "Ensure we have a password for the mythtv database user"
   ansible.builtin.set_fact:
-    mythtv_db_password: "{{ lookup('community.general.passwordstore', __password_lookup) }}"
+    hearthminion_mythtv_db_password: "{{ lookup('community.general.passwordstore', __password_lookup) }}"
   vars:
     __password_store_id: "{{ hearthminion_passdb }}/{{ hearthminion_domain }}/services/mysql/{{ hearthminion_mythtv_db_user }}"
     __password_length: "length={{ hearthminion_password_length }}"
@@ -48,7 +54,7 @@
 
 - name: "Install config file"
   ansible.builtin.template:
-    src: "config_xml.j2"
+    src: "etc/mythtv/config_xml.j2"
     dest: "/etc/mythtv/config.xml"
     owner: "root"
     group: "root"

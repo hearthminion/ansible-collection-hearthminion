@@ -1,0 +1,5 @@
+#!/bin/bash
+
+systemctl stop --user xscreensaver
+google-chrome --user-data-dir=/home/mythtv/.config/chrome-mythtv --app=https://netflix.com --start-fullscreen
+systemctl start --user xscreensaver

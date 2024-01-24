@@ -13,16 +13,33 @@
     - hearthminion_hue_lights is truthy
   tags:
     - hue
+    - hue-lights
+    - hue-homeassistant
+
+- name: "Ensure Hue Settings JSON directory exists."
+  ansible.builtin.file:
+    path: "{{ hearthminion_hue_json_dir }}"
+    owner: "{{ hearthminion_user }}"
+    group: "{{ hearthminion_group }}"
+    mode: "0700"
+    state: directory
+  become: false
+  delegate_to: localhost
+  run_once: true
+  tags:
+    - hue
+    - hue-info
+    - hue-lights
 
 - name: "Get hue light definitions."
   ansible.builtin.uri:
     url: "https://{{ ansible_host }}/clip/v2/resource/light"
     method: GET
-    dest: "~/hue_hubs/{{ hearthminion_hue_hub_id }}_lights.json"
+    dest: "{{ hearthminion_hue_json_dir }}/{{ hearthminion_hue_hub_id }}_lights.json"
     mode: "0644"
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
-    ca_path: "hue.crt"
+    ca_path: "{{ role_path }}/files/hue.crt"
     validate_certs: false
     body_format: json
   delegate_to: localhost
@@ -31,7 +48,9 @@
     - hearthminion_hue_hub_id is defined
     - hearthminion_hue_username is defined
   tags:
-    - get-info
+    - hue
+    - hue-info
+    - hue-lights
 
 - name: "Configure Groups."
   include_tasks: "groups.yml"
@@ -39,44 +58,51 @@
     - hearthminion_hue_groups is truthy
   tags:
     - hue
+    - hue-groups
 
 - name: "Get hue room definitions."
   ansible.builtin.uri:
     url: "https://{{ ansible_host }}/clip/v2/resource/room"
     method: GET
-    dest: "~/hue_hubs/{{ hearthminion_hue_hub_id }}_rooms.json"
+    dest: "{{ hearthminion_hue_json_dir }}/{{ hearthminion_hue_hub_id }}_rooms.json"
     mode: "0644"
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
-    ca_path: "hue.crt"
+    ca_path: "{{ role_path }}/files/hue.crt"
     validate_certs: false
     body_format: json
   delegate_to: localhost
   become: no
   when:
     - hearthminion_hue_hub_id is defined
+    - hearthminion_hue_json_dir is truthy
     - hearthminion_hue_username is defined
   tags:
-    - get-info
+    - hue
+    - hue-groups
+    - hue-info
 
 - name: "Get hue zone definitions."
   ansible.builtin.uri:
     url: "https://{{ ansible_host }}/clip/v2/resource/zone"
     method: GET
-    dest: "~/hue_hubs/{{ hearthminion_hue_hub_id }}_zones.json"
+    dest: "{{ hearthminion_hue_json_dir }}/{{ hearthminion_hue_hub_id }}_zones.json"
     mode: "0644"
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
-    ca_path: "hue.crt"
+    ca_path: "{{ role_path }}/files/hue.crt"
     validate_certs: false
     body_format: json
   delegate_to: localhost
   become: no
   when:
     - hearthminion_hue_hub_id is defined
-    - hearthminion_hue_username is defined
+    - hearthminion_hue_json_dir is truthy
+    - hearthminion_hue_username != "password"
   tags:
-    - get-info
+    - hue
+    - hue-groups
+    - hue-info
 
 - name: "Configure Scenes."
   include_tasks: "scenes.yml"
@@ -84,25 +110,30 @@
     - hearthminion_hue_scenes is truthy
   tags:
     - hue
+    - hue-scenes
+    - hue-homeassistant
 
 - name: "Get hue scene definitions."
   ansible.builtin.uri:
     url: "https://{{ ansible_host }}/clip/v2/resource/scene"
     method: GET
-    dest: "~/hue_hubs/{{ hearthminion_hue_hub_id }}_scenes.json"
+    dest: "{{ hearthminion_hue_json_dir }}/{{ hearthminion_hue_hub_id }}_scenes.json"
     mode: "0644"
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
-    ca_path: "hue.crt"
+    ca_path: "{{ role_path }}/files/hue.crt"
     validate_certs: false
     body_format: json
   delegate_to: localhost
   become: no
   when:
     - hearthminion_hue_hub_id is defined
-    - hearthminion_hue_username is defined
+    - hearthminion_hue_json_dir is truthy
+    - hearthminion_hue_username != "password"
   tags:
-    - get-info
+    - hue
+    - hue-info
+    - hue-scenes
 
 # ==================================================================================================
 #
@@ -113,16 +144,19 @@
   ansible.builtin.uri:
     url: "https://{{ ansible_host }}/api/{{ hearthminion_hue_username }}/rules"
     method: GET
-    dest: "~/hue_hubs/{{ hearthminion_hue_hub_id }}_rules.json"
+    dest: "{{ hearthminion_hue_json_dir }}/{{ hearthminion_hue_hub_id }}_rules.json"
+    ca_path: "{{ role_path }}/files/hue.crt"
     validate_certs: false
     body_format: json
   delegate_to: localhost
   become: no
   when:
     - hearthminion_hue_hub_id is defined
+    - hearthminion_hue_json_dir is truthy
     - hearthminion_hue_username is defined
   tags:
-    - get-info
+    - hue
+    - hue-info
 
 # ==================================================================================================
 #
@@ -170,3 +204,6 @@
     - groups['homeassistant'] is defined
   delegate_to: localhost
   become: no
+  tags:
+    - hue
+    - hue-homeassistant

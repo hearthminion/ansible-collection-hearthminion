@@ -6,7 +6,7 @@
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
     body: "{{ item['scene_definition'] | to_json }}"
-    ca_path: "hue.crt"
+    ca_path: "{{ role_path }}/files/hue.crt"
     validate_certs: false
     body_format: json
     status_code:
@@ -20,6 +20,9 @@
     - item['scene_definition'] is defined
     - item['scene_definition']['group']['rid'] is truthy
     - (item['id'] is not defined or item['id'] is falsy)
+  tags:
+    - hue
+    - hue-scenes
 
 - name: "Update Hue Scenes."
   ansible.builtin.uri:
@@ -28,7 +31,7 @@
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
     body: "{{ __scene | to_json }}"
-    ca_path: "hue.crt"
+    ca_path: "{{ role_path }}/files/hue.crt"
     validate_certs: false
     body_format: json
   loop: "{{ hearthminion_hue_scenes }}"
@@ -44,6 +47,9 @@
     - item['scene_definition']['metadata']['name'] != hearthminion_hue_scene_homeassistant
   delegate_to: localhost
   become: no
+  tags:
+    - hue
+    - hue-scenes
 
 - name: "Update Home Assistant Scene Entity IDs."
   ansible.builtin.uri:
@@ -71,3 +77,6 @@
     - groups['homeassistant'] is defined
   delegate_to: localhost
   become: no
+  tags:
+    - hue
+    - hue-homeassistant

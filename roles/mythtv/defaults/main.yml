@@ -4,6 +4,8 @@ hearthminion_mythtv_packages:
   - libmyth-python
   - libmythtv-perl
 
+hearthminion_mythtv_version: 33
+
 hearthminion_mythtv_backend_packages:
   - mythtv-backend
 

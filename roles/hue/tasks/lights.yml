@@ -9,7 +9,7 @@
     url: "https://{{ ansible_host }}/api/{{ hearthminion_hue_username }}/lights"
     method: POST
     body: "{{ serial_number | to_json }}"
-    ca_path: "hue.crt"
+    ca_path: "{{ role_path }}/files/hue.crt"
     validate_certs: false
     body_format: json
   loop: "{{ hearthminion_hue_lights }}"
@@ -23,6 +23,9 @@
     - item.serial_number is defined
     - item.serial_number is truthy
     - item.id is not defined
+  tags:
+    - hue
+    - hue-lights
 
 - name: "Update Hue Lights."
   ansible.builtin.uri:
@@ -31,20 +34,24 @@
     headers:
       hue-application-key: "{{ hearthminion_hue_username }}"
     body: "{{ light_definition | to_json }}"
-    ca_path: "hue.crt"
+    ca_path: "{{ role_path }}/files/hue.crt"
     validate_certs: false
     body_format: json
   loop: "{{ hearthminion_hue_lights }}"
+  become: false
+  delegate_to: localhost
   vars:
     light_definition:
-      name: "{{ item.name }}"
+      metadata:
+        name: "{{ item.name }}"
       # powerup: {{ hearthminion_hue_power_on_behavior }}"
   when:
     - hearthminion_hue_lights is truthy
     - item.name is defined
     - item.id is defined
-  delegate_to: localhost
-  become: no
+  tags:
+    - hue
+    - hue-lights
 
 - name: "Update Home Assistant Light Entity IDs."
   ansible.builtin.uri:
@@ -60,6 +67,8 @@
       - 200
       - 201
   loop: "{{ hearthminion_hue_lights }}"
+  become: false
+  delegate_to: localhost
   vars:
     homeassistant_host: "{{ hearthminion_hue_ha_host | default(groups['homeassistant'][0]) }}:8123"
     json_data:
@@ -69,5 +78,6 @@
     - hearthminion_hue_lights is truthy
     - item.ha_entity is defined
     - groups['homeassistant'] is defined
-  delegate_to: localhost
-  become: no
+  tags:
+    - hue
+    - hue-homeassistant

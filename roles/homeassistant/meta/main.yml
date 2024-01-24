@@ -1,9 +1,9 @@
 galaxy_info:
   author: G Derber
-  description: Installs an Apache Web Server
-  company: Bloodymage
+  description: Installs Home Assistant
+  company: Hearth Minion
 
-  issue_tracker_url: http://github.com/bloodymage/ansible-collection-autonomy
+  issue_tracker_url: http://github.com/hearthminion/ansible-collection-hearthminion
 
   license: MIT
 
@@ -27,4 +27,4 @@ galaxy_info:
 
 dependencies:
   - role: hearthminion.hearthminion.config_defaults
-  - role: bloodymage.autonomy.collection_handlers
+  - role: bloodymage.autonomy.collection_globals
