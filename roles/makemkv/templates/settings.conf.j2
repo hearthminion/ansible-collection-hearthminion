@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+#
+# MakeMKV settings file, written by MakeMKV v{{ hearthminion_makemkv_version }}  linux(x64-release)
+#
+
+app_DestinationDir = "{{ hearthminion_makemkv_app_destination_dir }}"
+app_ExpertMode = "{{ hearthminion_makemkv_app_expert_mode }}"
+app_Java = "{{ hearthminion_makemkv_app_java }}"
+app_Proxy = "{{ hearthminion_makemkv_app_proxy }}"
+app_ccextractor = "{{ hearthminion_makemkv_app_ccextractor }}"
+sdf_Stop = "{{ hearthminion_makemkv_sdf_stop }}"
+{% for item in hearthminion_makemkv_drives -%}
+speed_{{ item.id }} = "{{ item.option }}"
+{% endfor %}
+app_Key = "{{ hearthminion_makemkv_app_key }}"

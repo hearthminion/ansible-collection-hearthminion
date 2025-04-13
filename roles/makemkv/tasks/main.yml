@@ -1,6 +1,6 @@
 ---
 # tasks file for makemkv
-- name: Include OS-specific variables.
+- name: "Include OS-specific variables."
   include_vars: "{{ lookup('first_found', params) }}"
   vars:
     params:
@@ -9,51 +9,92 @@
         - "vars"
   become: no
 
-- name: "Install packages"
+- name: "Install packages."
   ansible.builtin.package:
-    name: "{{ hearthminion_packages }}"
+    name: "{{ hearthminion_makemkv_packages }}"
     state: present
-  become: yes
+  become: true
 
 # Download packages
-- name: "Download MakeMKV Sources"
+- name: "Download MakeMKV Sources."
   ansible.builtin.get_url:
-    url: "{{ item.source }}"
-    dest: "/tmp/{{ item.file }}"
-    #checksum: "{{ item.checksum_type }}:{{ item.checksum }}"
+    url: "{{ item['source'] }}"
+    dest: "/tmp/{{ item['file'] }}"
+    #checksum: "{{ item['checksum_type'] }}:{{ item['checksum'] }}"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     mode: '0644'
-  loop: "{{ makemkv_files }}"
-  become: no
+  loop: "{{ hearthminion_makemkv_files }}"
+  become: true
 
-- name: "Create Build Directories"
+- name: "Create Build Directories."
   ansible.builtin.file:
-    path: "/tmp/{{ item.build_dir }}"
+    path: "/tmp/{{ item['build_dir'] }}"
     state: directory
     owner: root
     group: root
     mode: "0755"
-  become: yes
-  loop: "{{ makemkv_files }}"
+  become: true
+  loop: "{{ hearthminion_makemkv_files }}"
 
-- name: Extract Sources
+- name: "Extract Sources."
   ansible.builtin.unarchive:
-    src: "/tmp/{{ item.file }}"
-    dest: "/tmp/{{ item.build_dir }}"
+    src: "/tmp/{{ item['file'] }}"
+    dest: "/tmp/{{ item['build_dir'] }}"
     remote_src: yes
     owner: root
     group: root
     extra_opts: [--strip-components=1]
     #creates: "{{ keycloak_license_path }}"
-  become: yes
-  loop: "{{ makemkv_files }}"
+  become: true
+  loop: "{{ hearthminion_makemkv_files }}"
 
-# For OSS package:
-# ./configure
-# make
-# sudo make install
+- name: "Build OSS Package."
+  ansible.builtin.command:
+    cmd: "{{ item }}"
+    chdir: "/tmp/{{ hearthminion_makemkv_files[0]['build_dir'] }}"
+  loop: "{{ hearthminion_makemkv_files[0]['build_cmds' ] }}"
+  become: true
 
-# For Bin package
-# make
-# sudo make install
+- name: "Accept EULA."
+  ansible.builtin.copy:
+    src: "eula_accepted"
+    dest: "/tmp/{{ hearthminion_makemkv_files[1]['build_dir'] }}/tmp/eula_accepted"
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: "Build Bin Package."
+  ansible.builtin.command:
+    cmd: "{{ item }}"
+    chdir: "/tmp/{{ hearthminion_makemkv_files[1]['build_dir'] }}"
+  loop: "{{ hearthminion_makemkv_files[1]['build_cmds' ] }}"
+  become: true
+
+- name: "Remove Build Directories."
+  ansible.builtin.file:
+    path: "/tmp/{{ item['build_dir'] }}"
+    state: absent
+  become: true
+  loop: "{{ hearthminion_makemkv_files }}"
+
+- name: "Ensure Settings Directory Exists."
+  ansible.builtin.file:
+    path: "/home/{{ hearthminion_makemkv_user }}/.MakeMKV"
+    state: directory
+    owner: "{{ hearthminion_makemkv_user }}"
+    group: "{{ hearthminion_makemkv_group }}"
+    mode: "0755"
+  become: true
+
+- name: "Install Configuration Files."
+  ansible.builtin.template:
+    src: "settings.conf.j2"
+    dest: "/home/{{ hearthminion_makemkv_user }}/.MakeMKV/settings.conf"
+    owner: "{{ hearthminion_makemkv_user }}"
+    group: "{{ hearthminion_makemkv_group }}"
+    mode: "0644"
+  become: true
+  when:
+    - hearthminion_makemkv_user is truthy

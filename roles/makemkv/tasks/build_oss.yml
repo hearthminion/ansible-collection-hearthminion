@@ -1,0 +1,7 @@
+---
+- name: "Configure OSS Build."
+  ansible.builtin.command:
+    cmd: "{{ item }}"
+    chdir: "/tmp/{{ makemkv_files[0]['build_dir'] }}"
+  loop: "{{ makemkv_files[0]['build_cmds' ] }}"
+  become: true
