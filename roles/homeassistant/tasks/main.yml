@@ -139,14 +139,7 @@
     owner: root
     group: root
     mode: "0644"
-  loop: "{{ virtual_hosts }}"
   become: yes
-  when:
-    - virtual_hosts is defined
-    - item.content is defined
-    - item.content == "homeassistant"
-    - item.enabled is defined
-    - item.enabled
   notify: reload nginx
   tags:
     - upgrade
@@ -158,14 +151,7 @@
     owner: root
     group: root
     state: "link"
-  loop: "{{ virtual_hosts }}"
   become: yes
-  when:
-    - virtual_hosts is defined
-    - item.content is defined
-    - item.content == "homeassistant"
-    - item.enabled is defined
-    - item.enabled
   notify: reload nginx
   tags:
     - upgrade
@@ -180,13 +166,13 @@
   become: yes
   notify: restart nginx
   tags:
-    - nginx
+    - upgrade
 
 - name: "Ensure default site does not exist."
   ansible.builtin.file:
     path: "/etc/nginx/sites-enabled/default.conf"
     state: "absent"
-  become: yes
+  become: true
   notify: reload nginx
   tags:
     - upgrade

@@ -45,28 +45,40 @@
     - upgrade-zwavejs2mqtt
     - upgrade-zwave
 
+    # healthcheck:
+    #   test: ["wget", "--no-verbose", "--spider", "--no-check-certificate", "--header 'Accept: text/plain' https://localhost:8091/health"]
+    #   interval: "1m"
+    #   timeout: "10s"
+    #   start_period: "30s"
+    #   start_interval: "10s"
+    #   retries: 3
 - name: "Install zwave-js-ui Docker Container."
   community.docker.docker_container:
     name: "zwave-js-ui"
     image: "zwavejs/zwave-js-ui:latest"
-    restart_policy: unless-stopped
-    network_mode: host
-    volumes:
-      - "{{ zwavejs2mqtt_config_dir }}:/usr/src/app/store"
-    exposed_ports: "{{ __zwavejs2mqtt_exposed_ports }}"
-    detach: yes
+    auto_remove: false
+    container_default_behavior: "no_defaults"
+    detach: true
     devices: "{{ zwavejs2mqtt_devices }}"
-    init: yes
-    container_default_behavior: no_defaults
-    auto_remove: no
-    interactive: no
+    exposed_ports: "{{ __zwavejs2mqtt_exposed_ports }}"
+    init: true
+    interactive: true
     memory: "0"
+    mounts:
+      - source: "{{ zwavejs2mqtt_config_dir }}"
+        target: "/usr/src/app/store"
+        type: "volume"
+    network_mode: "host"
     paused: no
     privileged: no
-    read_only: no
-    tty: true
     pull: "{{ __zwavejs2mqtt_upgrade }}"
-    #state: absent
+    read_only: false
+    recreate: false
+    restart: false
+    restart_policy: "unless-stopped"
+    state: "healthy"
+    stop_signal: "SIGINT"
+    tty: true
   become: yes
   tags:
     - upgrade
