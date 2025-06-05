@@ -45,28 +45,28 @@
     - upgrade-zwavejs2mqtt
     - upgrade-zwave
 
-- name: "Install zwavejs2mqtt Docker Container."
+- name: "Install zwave-js-ui Docker Container."
   community.docker.docker_container:
-    name: "zwavejs2mqtt"
-    # image: "zwavejs/zwave-js-ui:latest"
-    # restart_policy: unless-stopped
-    # network_mode: host
-    # volumes:
-    #   - "{{ zwavejs2mqtt_config_dir }}:/usr/src/app/store"
-    # exposed_ports: "{{ __zwavejs2mqtt_exposed_ports }}"
-    # detach: yes
-    # devices: "{{ zwavejs2mqtt_devices }}"
-    # init: yes
-    # container_default_behavior: no_defaults
-    # auto_remove: no
-    # interactive: no
-    # memory: "0"
-    # paused: no
-    # privileged: no
-    # read_only: no
-    # tty: true
-    # pull: "{{ __zwavejs2mqtt_upgrade }}"
-    state: absent
+    name: "zwave-js-ui"
+    image: "zwavejs/zwave-js-ui:latest"
+    restart_policy: unless-stopped
+    network_mode: host
+    volumes:
+      - "{{ zwavejs2mqtt_config_dir }}:/usr/src/app/store"
+    exposed_ports: "{{ __zwavejs2mqtt_exposed_ports }}"
+    detach: yes
+    devices: "{{ zwavejs2mqtt_devices }}"
+    init: yes
+    container_default_behavior: no_defaults
+    auto_remove: no
+    interactive: no
+    memory: "0"
+    paused: no
+    privileged: no
+    read_only: no
+    tty: true
+    pull: "{{ __zwavejs2mqtt_upgrade }}"
+    #state: absent
   become: yes
   tags:
     - upgrade
@@ -87,37 +87,35 @@
 - name: "Install Nginx virtual host config file."
   ansible.builtin.template:
     src: "nginx-site.conf.j2"
-    dest: "/etc/nginx/sites-available/{{ item.name }}.conf"
+    dest: "/etc/nginx/sites-available/{{ inventory_hostname }}.conf"
     owner: root
     group: root
     mode: "0644"
-  loop: "{{ virtual_hosts }}"
   become: yes
-  when:
-    - virtual_hosts is defined
-    - item.content is defined
-    - item.content == "zwavejs2mqtt"
-    - item.enabled is defined
-    - item.enabled
   notify: reload nginx
   tags:
     - upgrade
 
 - name: "Enable nginx site."
   ansible.builtin.file:
-    src: "/etc/nginx/sites-available/{{ item.name }}.conf"
-    dest: "/etc/nginx/sites-enabled/{{ item.name }}.conf"
+    src: "/etc/nginx/sites-available/{{ inventory_hostname }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ inventory_hostname }}.conf"
     owner: root
     group: root
     state: "link"
-  loop: "{{ virtual_hosts }}"
   become: yes
-  when:
-    - virtual_hosts is defined
-    - item.content is defined
-    - item.content == "zwavejs2mqtt"
-    - item.enabled is defined
-    - item.enabled
   notify: reload nginx
   tags:
     - upgrade
+
+- name: "Install ssl snippets"
+  ansible.builtin.template:
+    src: "ssl-snippets.conf.j2"
+    dest: "/etc/nginx/snippets/{{ inventory_hostname }}.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  become: yes
+  notify: restart nginx
+  tags:
+    - nginx

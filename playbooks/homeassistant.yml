@@ -18,14 +18,16 @@
   roles:
     - role: hearthminion.hearthminion.hue
 
-- hosts: homeassistant
-  roles:
-    - role: hearthminion.hearthminion.homeassistant
-      tags:
-        - homeassistant
-
+# Put Zwave Controllers before Home Assistant.  Home Assistant expects a
+# running zwave controller somewhere on the network.
 - hosts: zwavecontrollers
   roles:
     - role: hearthminion.hearthminion.zwavejs2mqtt
       tags:
         - zwavejs2mqtt
+
+- hosts: homeassistant
+  roles:
+    - role: hearthminion.hearthminion.homeassistant
+      tags:
+        - homeassistant

@@ -1,21 +1,21 @@
-# Ansible managed
+# {{ ansible_managed }}
 
 server {
   listen 80 {% if zwavejs2mqtt_nginx_default_server %}default_server{% endif %};
   listen [::]:80 {% if zwavejs2mqtt_nginx_default_server %}default_server{% endif %};
-  server_name {{ item.name }}.{{ ansible_domain }} {{ item.name }};
-  return 301 https://{{ item.name }}.{{ ansible_domain }}$request_uri;
+  server_name {{ inventory_hostname }} {{ inventory_hostname_short }};
+  return 301 https://{{ inventory_hostname }}$request_uri;
 }
 
 server {
   listen 443 ssl {% if zwavejs2mqtt_nginx_default_server %}default_server{% endif %};
   listen [::]:443 ssl {% if zwavejs2mqtt_nginx_default_server %}default_server{% endif %};
 
-  include snippets/{{ hearthminion_hostname }}.conf;
+  include snippets/{{ inventory_hostname }}.conf;
 
   root /var/www/html;
 
-  server_name {{ item.name }}.{{ ansible_domain }} {{ item.name }};
+  server_name {{ inventory_hostname }} {{ inventory_hostname_short }};
 
   location / {
     proxy_http_version 1.1;

@@ -47,8 +47,11 @@
   ansible.builtin.git:
     repo: "{{ hearthminion_homeassistant_config_git_url }}"
     dest: "{{ hearthminion_homeassistant_config_dir }}"
+    remote: "origin"
+    accept_newhostkey: true
     force: false
     update: true
+  become: true
   when:
     - hearthminion_homeassistant_config_git_url is truthy
 
@@ -56,7 +59,10 @@
   ansible.builtin.git:
     repo: "{{ hearthminion_homeassistant_storage_git_url }}"
     dest: "{{ hearthminion_homeassistant_config_dir }}/.storage"
+    remote: "origin"
     update: false
+    force: false
+  become: true
   when:
     - hearthminion_homeassistant_storage_git_url is truthy
 

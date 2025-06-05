@@ -1,6 +1,7 @@
 ---
 # defaults file for homeassistant
 hearthminion_homeassistant_packages:
+  - docker.io
   - python3-docker
   - libxml2-dev
   - libxslt1-dev
