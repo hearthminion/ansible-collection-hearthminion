@@ -45,13 +45,8 @@
     - upgrade-zwavejs2mqtt
     - upgrade-zwave
 
-    # healthcheck:
-    #   test: ["wget", "--no-verbose", "--spider", "--no-check-certificate", "--header 'Accept: text/plain' https://localhost:8091/health"]
-    #   interval: "1m"
-    #   timeout: "10s"
-    #   start_period: "30s"
-    #   start_interval: "10s"
-    #   retries: 3
+# TODO: Add check for storage folder existance before running docker command.
+
 - name: "Install zwave-js-ui Docker Container."
   community.docker.docker_container:
     name: "zwave-js-ui"
@@ -65,9 +60,9 @@
     interactive: true
     memory: "0"
     mounts:
-      - source: "{{ zwavejs2mqtt_config_dir }}"
+      - type: "bind"
+        source: "{{ zwavejs2mqtt_config_dir }}"
         target: "/usr/src/app/store"
-        type: "volume"
     network_mode: "host"
     paused: no
     privileged: no
@@ -76,10 +71,10 @@
     recreate: false
     restart: false
     restart_policy: "unless-stopped"
-    state: "healthy"
+    state: "present"
     stop_signal: "SIGINT"
     tty: true
-  become: yes
+  become: true
   tags:
     - upgrade
 

@@ -1,0 +1,61 @@
+---
+# ==================================================================================================
+#
+# This next set of tasks configures Nginx to provide https capabilities.
+#
+# This needs another way of checking and disabling.
+#
+# Two sites cannot both have "default_server" set.  So what really needs to happen is a way to check
+# if another site has that value set.  If so, we need to not enable "default_server" in this
+# configuration file.
+#
+# Current workaround is to install our site, and remove "default" site from the enabled servers.
+#
+# This will break setups where "default" site is another website on the host that is in use.
+#
+# ==================================================================================================
+- name: "Install Nginx virtual host config file."
+  ansible.builtin.template:
+    src: "nginx-site.conf.j2"
+    dest: "/etc/nginx/sites-available/{{ inventory_hostname }}.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  become: yes
+  notify: reload nginx
+  tags:
+    - upgrade
+
+- name: "Enable nginx site."
+  ansible.builtin.file:
+    src: "/etc/nginx/sites-available/{{ inventory_hostname }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ inventory_hostname }}.conf"
+    owner: root
+    group: root
+    state: "link"
+  become: yes
+  notify: reload nginx
+  tags:
+    - upgrade
+
+- name: "Install ssl snippets"
+  ansible.builtin.template:
+    src: "ssl-snippets.conf.j2"
+    dest: "/etc/nginx/snippets/{{ inventory_hostname }}.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  become: yes
+  notify: restart nginx
+  tags:
+    - upgrade
+
+- name: "Ensure default site does not exist."
+  ansible.builtin.file:
+    path: "/etc/nginx/sites-enabled/default"
+    state: "absent"
+  become: true
+  notify: reload nginx
+  tags:
+    - upgrade
+

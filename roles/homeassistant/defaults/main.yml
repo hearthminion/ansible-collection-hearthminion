@@ -24,7 +24,7 @@ hearthminion_homeassistant_config_files:
 
 homeassistant_caldav: no
 
-homeassistant_nginx_default_server: yes
+homeassistant_nginx_default_server: false
 
 hearthminion_homeassistant_secrets: []
 hearthminion_homeassistant_ping_count: 1

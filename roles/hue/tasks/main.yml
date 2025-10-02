@@ -23,7 +23,7 @@
     group: "{{ hearthminion_group }}"
     mode: "0700"
     state: directory
-  become: false
+  become: true
   delegate_to: localhost
   run_once: true
   tags:

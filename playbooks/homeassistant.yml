@@ -12,11 +12,12 @@
 
 # - hosts: ada
 
-# - hosts:
 - hosts: hue_hubs
   gather_facts: false
   roles:
     - role: hearthminion.hearthminion.hue
+      vars:
+        __hue_tasks: "main"
 
 # Put Zwave Controllers before Home Assistant.  Home Assistant expects a
 # running zwave controller somewhere on the network.
@@ -29,5 +30,23 @@
 - hosts: homeassistant
   roles:
     - role: hearthminion.hearthminion.homeassistant
+      vars:
+        __homeassistant_tasks: "docker"
       tags:
         - homeassistant
+
+- hosts: homeassistant:homeassistant_sites
+  roles:
+    - role: hearthminion.hearthminion.homeassistant
+      vars:
+        __homeassistant_tasks: "nginx"
+      tags:
+        - homeassistant
+
+# Run Hub Tasks that require a running HomeAssistant instance to be running.
+- hosts: hue_hubs
+  gather_facts: false
+  roles:
+    - role: hearthminion.hearthminion.hue
+      vars:
+        __hue_tasks: "homeassistant"
